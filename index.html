@@ -1,0 +1,4904 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<title>Portfolio – Siddhant</title>
+
+<script>
+  if ('scrollRestoration' in history) {
+    history.scrollRestoration = 'manual';
+  }
+</script>
+
+<style>
+  html {
+    scroll-padding-top: 150px;
+    scroll-behavior: smooth;
+}
+
+:root {
+  --bg-main: #fdfaf3;          /* soft academic cream */
+  --blue-soft: #0a2342;        /* deep Oxford blue – main accent */
+  --blue-soft-2: #3d5a80;      /* muted secondary blue */
+  --text-blue: #0a2342;        /* headings / highlights */
+  --gold-accent: #c8a951;      /* optional highlight for badges or underlines */
+  --white: #ffffff;
+  
+  
+}
+
+:root { --tracking-tight: -0.015em; }
+
+h2, h3, .about-title {
+  letter-spacing: var(--tracking-tight);
+}
+
+p, li {
+  line-height: 1.75;
+  letter-spacing: -0.005em;
+}
+
+/* ============================= */
+/* GLOBAL                        */
+/* ============================= */
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont,
+               "SF Pro Display", "SF Pro Text",
+               "Helvetica Neue", Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+  letter-spacing: -0.01em;
+
+  /* Paper + dots + depth */
+  background:
+    radial-gradient(circle, rgba(0,0,0,0.06) 0.7px, transparent 0.8px),
+    linear-gradient(180deg, #fff7eb 0%, #f1f4f9 100%);
+
+  background-size:
+  16px 16px,   /* dot spacing */
+    100% 100%;  /* gradient */
+
+  background-position:
+    0 0,
+    0 0;
+
+  color: #1c1c1e;
+}
+
+/* Smooth scroll */
+
+/* ============================= */
+/* APPLE-STYLE NAVBAR            */
+/* ============================= */
+
+.main-nav-wrapper {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 85px;
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  z-index: 9999;
+  background: linear-gradient(
+    to bottom,
+    rgba(255,255,255,0.65) 0%,
+    rgba(255,255,255,0.25) 50%,
+    transparent 100%
+  );
+  backdrop-filter: blur(12px);
+}
+
+.main-nav {
+  width: 62vw;
+  min-width: 300px;
+  max-width: 720px;
+  background: #ffffff;
+  border-radius: 32px;
+  padding: 10px 26px;
+  display: flex;
+  justify-content: center;
+  box-shadow: 0 20px 40px rgba(0,0,0,0.06);
+  transform: translateY(10px);
+  opacity: 0;
+  transition: opacity 0.5s ease, transform 0.5s ease;
+}
+
+.main-nav.in-view {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.main-nav.hidden {
+  transform: translateY(-120px);
+  opacity: 0;
+}
+
+.main-nav a {
+  text-decoration: none;
+  color: #2d3c53;
+  font-weight: 500;
+  font-size: 14px;
+  margin: 0 18px;
+  letter-spacing: 0.2px;
+  position: relative;
+  padding-bottom: 4px;
+}
+
+.main-nav a.active::after,
+.main-nav a:hover::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: 0;
+  width: 55%;
+  height: 2px;
+  transform: translateX(-50%);
+  background: var(--gold-accent);
+  border-radius: 2px;
+  transition: width 0.2s ease;
+}
+
+/* ============================= */
+/* SCROLL / ANIMATION HELPERS    */
+/* ============================= */
+
+/* Sections NEVER fade (prevents layout shift) */
+.scroll-section:not(.apple-section) {
+  opacity: 1;
+}
+
+/* Only reveal individual items */
+.reveal-item {
+  opacity: 0;
+  transition: opacity 0.6s cubic-bezier(0.22,1,0.36,1);
+}
+
+.reveal-item.in-view {
+  opacity: 1;
+}
+
+.reveal-item {
+  opacity: 0;
+  transition: opacity 0.6s cubic-bezier(0.22,1,0.36,1);
+}
+
+.reveal-item.in-view {
+  opacity: 1;
+}
+
+.parallax {
+  transform: translate3d(0, var(--parallax-y, 0px), 0);
+  will-change: transform;
+}
+
+/* ============================= */
+/* ABOUT SECTION                 */
+/* ============================= */
+
+.about-section {
+  display: flex;
+  justify-content: center;
+  padding-top: 140px;   /* clears navbar */
+  padding-bottom: 120px;
+}
+
+.about-inner {
+  background: none;
+  max-width: 820px;
+  margin: 0 auto;
+  row-gap: 32px;
+
+  display: grid;
+  grid-template-columns: 0.8fr 1.2fr;
+  gap: 48px;
+
+  align-items: start;   /* 🔑 fixes vertical misalignment */
+  color: #0a2342;
+
+  /* DEBUG — remove after verifying */
+  /* outline: 1px dashed red; */
+}
+
+/* LEFT COLUMN */
+.about-title {
+  font-size: 34px;
+  font-weight: 700;
+  margin-bottom: 24px;
+  letter-spacing: -0.02em;
+}
+
+.about-photo-card img {
+  width: 250px;
+  border-radius: 14px;
+  display: block;
+}
+
+/* RIGHT COLUMN */
+.about-sub {
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  margin-bottom: 18px;
+  color: #3d5a80;
+}
+.about-intro {
+  max-width: 62ch;
+  margin-bottom: 18px;
+
+  line-height: 1.7;
+  text-align: left;
+}
+
+.about-intro-lead {
+  font-weight: 600;
+  margin-top: 14px;
+}
+
+.about-title {
+  font-size: 34px;
+  font-weight: 700;
+  margin-bottom: 24px;
+  letter-spacing: -0.02em;
+}
+
+.about-photo-card img {
+  width: 250px;
+  border-radius: 14px;
+  background: #ddd;
+  display: block;
+}
+
+.photo-badge {
+  margin-top: 12px;
+  font-size: 12px;
+  background: rgba(0,0,0,0.4);
+  padding: 6px 12px;
+  border-radius: 20px;
+  width: fit-content;
+}
+
+.about-sub {
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  margin-bottom: 18px;
+  color: #3d5a80;
+}
+
+.about-heading {
+  font-size: 24px;
+  font-weight: 700;
+  margin: 14px 0;
+}
+
+.about-intro-lead {
+  font-weight: 700;
+}
+.about-intro {
+  font-size: 15px;
+  line-height: 1.75;
+  max-width: 620px;
+}
+
+
+.about-intro p {
+  margin-bottom: 18px;
+}
+
+.about-intro strong {
+  display: block;
+  margin: 26px 0 12px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+
+.about-intro {
+  line-height: 1.65;
+  max-width: 62ch;
+}
+
+/* ============================= */
+/* ABOUT – PHILOSOPHY TOGGLES    */
+/* ============================= */
+
+.about-philosophy {
+  display: flex;
+  gap: 14px;
+  margin-top: 26px;
+}
+
+.about-toggle {
+  border-radius: 999px;
+  padding: 10px 18px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  border: none;
+  transition: all 0.25s cubic-bezier(0.22,1,0.36,1);
+}
+
+/* PRIMARY — How I Work */
+.about-toggle.primary {
+  background: rgba(255,255,255,0.85);
+  color: var(--blue-soft);
+}
+
+.about-toggle.primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 24px rgba(0,0,0,0.15);
+}
+
+/* SECONDARY — What I Don’t Do */
+.about-toggle.secondary {
+  background: rgba(255,255,255,0.25);
+  color: white;
+}
+
+.about-toggle.secondary:hover {
+  background: rgba(255,255,255,0.35);
+}
+
+
+/* Apple-style typography tuning */
+.about-title {
+  font-family: "SF Pro Display", -apple-system, BlinkMacSystemFont;
+  letter-spacing: -0.02em;
+}
+
+.about-intro,
+.about-sub {
+  font-family: "SF Pro Text", -apple-system, BlinkMacSystemFont;
+  letter-spacing: -0.005em;
+  line-height: 1.6;
+}
+
+
+/* ============================= */
+/* SKILLS SECTION                */
+/* ============================= */
+
+.skills-main-title {
+  font-size: 38px;
+  font-weight: 700;
+  color: var(--text-blue);
+  text-align: center;
+  margin-bottom: 5px;
+}
+
+.skills-tagline {
+  font-size: 16px;
+  color: #9c7a2f;
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.skills-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center; 
+}
+
+/* Blue container */
+
+/* Tabs Row */
+.skills-tabs {
+  display: flex;
+  justify-content: center;     /* center the tabs */
+  gap: 14px;
+  margin-bottom: 20px;
+}
+
+.skills-tab-btn {
+  background: rgba(255,255,255,0.25);
+  border: none;
+  padding: 10px 18px;
+  border-radius: 999px;
+  cursor: pointer;
+  color: white;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: transform 0.25s cubic-bezier(0.22,1,0.36,1),
+              box-shadow 0.25s cubic-bezier(0.22,1,0.36,1),
+              background 0.25s ease;
+}
+
+.skills-inner {
+  background: linear-gradient(
+    180deg,
+    #3b2a30,   /* softened maroon */
+    #2a1f24    /* deep but muted */
+  );
+  color: #fdf6f8;
+
+  max-width: 1100px;
+  width: 100%;
+  padding: 40px;
+  border-radius: 20px;
+  box-shadow:
+    0 18px 40px rgba(0,0,0,0.10);
+  margin-top: 20px;
+
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+  position: relative;
+  min-height: 590px;
+}
+.skills-panel {
+  position: absolute;
+  inset: 0;
+  top: 80px;
+
+  display: block;
+  padding-top: 10px;
+
+  opacity: 0;
+  transform: translateY(14px);
+  pointer-events: none;
+
+  transition:
+    opacity 0.45s cubic-bezier(0.22,1,0.36,1),
+    transform 0.45s cubic-bezier(0.22,1,0.36,1);
+}
+
+.skills-panel.active {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
+
+
+.skills-tab-btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 18px rgba(0,0,0,0.25);
+}
+
+.skills-tab-btn.active {
+  background: rgba(255,255,255,0.45);
+}
+
+/* Icons inside tab buttons */
+.tab-icon {
+  width: 18px;
+  height: 18px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.tab-icon svg {
+  width: 18px;
+  height: 18px;
+  stroke: white;
+  stroke-width: 1.8;
+  fill: none;
+}
+
+/* Panels */
+
+
+
+.skills-panel ul {
+  margin: 0;
+  padding-left: 56px;         /* proper indentation */
+  width: 920px;
+}
+
+.skills-list li {
+  list-style: none;
+  padding: 14px 0;
+  border-bottom: none;
+}
+
+.skills-list li + li {
+  margin-top: 6px;
+}
+
+
+
+.skills-tab-btn.active {
+  background: rgba(255,255,255,0.55);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+
+/* ============================= */
+/* PROJECTS SECTION              */
+/* ============================= */
+
+.projects-section {
+ /* reduced top padding */
+ /* pulls it up to close the gap */
+  text-align: center;
+}
+
+.projects-main-title {
+  font-size: 38px;
+  font-weight: 700;
+  color: var(--text-blue);
+  margin-bottom: 5px;
+}
+
+.projects-tagline {
+  font-size: 16px;
+  color: #9c7a2f;
+  margin-bottom: 40px;
+}
+
+.featured-title {
+  font-size: 22px;
+  font-weight: 600;
+  color: var(--text-blue);
+  text-align: left;
+  max-width: 1200px;
+  margin: 0 auto 15px auto;
+}
+
+.projects-grid {
+  max-width: 1200px;
+  margin: auto;
+  display: grid;
+  grid-template-columns: repeat(3,1fr);
+  gap: 26px;
+}
+
+.project-card {
+  background: #f7f9fc;
+  padding: 25px;
+  border-radius: 18px;
+  text-align: left;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+  transition: transform 0.25s cubic-bezier(0.22,1,0.36,1),
+              box-shadow 0.25s cubic-bezier(0.22,1,0.36,1);
+  cursor: pointer;
+  transform: translate3d(0, var(--parallax-y, 0px), 0);
+  will-change: transform;
+}
+
+.project-card:hover {
+  transform: translate3d(0, calc(var(--parallax-y, 0px) - 6px), 0);
+  box-shadow: 0 18px 45px rgba(0,0,0,0.12);
+}
+
+/* Prevent parallax before section settles */
+.apple-section:not(.in-view) .project-card {
+  transform: none !important;
+}
+
+#projects.apple-section {
+  transform: translateY(72px) scale(0.95);
+}
+
+#projects.apple-section.in-view {
+  transform: translateY(0) scale(1);
+}
+
+.project-card h3 {
+  margin-bottom: 6px;
+  font-size: 17px;
+  color: #1f2d40;
+}
+
+.project-card p {
+  font-size: 13px;
+  color: #556987;
+}
+
+
+
+
+.more-projects .project-card {
+  max-width: 100%;
+  padding: 22px;
+}
+
+.more-projects .project-card h3 {
+  font-size: 17px;
+}
+
+.more-projects .project-card p {
+  font-size: 13.5px;
+  line-height: 1.5;
+}
+
+
+/* ============================= */
+/* EXPERIENCE SECTION            */
+/* ============================= */
+
+.experience-section {
+/* reduced top padding */
+  text-align: center;
+}
+
+.experience-title {
+  font-size: 38px;
+  font-weight: 700;
+  color: var(--text-blue);
+  margin-bottom: 5px;
+}
+
+.experience-tagline {
+  font-size: 16px;
+  color: #9c7a2f;
+  margin-bottom: 40px;
+}
+
+.experience-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(280px, 360px));
+  justify-content: center;
+  gap: 2.5rem;
+  max-width: 1200px;
+  margin-top: 3rem;
+}
+
+.exp-card {
+  background: #ffffff;
+  padding: 26px;
+  border-radius: 22px;
+  text-align: left;
+
+  box-shadow: 0 14px 38px rgba(0,0,0,0.08);
+  transition:
+    transform 0.35s cubic-bezier(0.22,1,0.36,1),
+    box-shadow 0.35s cubic-bezier(0.22,1,0.36,1);
+
+  display: flex;
+  flex-direction: column;
+}
+
+/* Hover lift */
+.exp-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 26px 60px rgba(0,0,0,0.14);
+}
+
+.exp-btn {
+  padding: 10px 18px;
+  border-radius: 999px;
+  border: none;
+  font-size: 14px;
+  cursor: pointer;
+  background: var(--blue-soft);
+  color: white;
+  transition: 0.25s ease;
+  margin-top: 18px;
+  align-self: flex-start;
+}
+
+.exp-btn:hover {
+  background: var(--blue-soft-2);
+  transform: translateY(-2px);
+}
+/* ============================= */
+/* VOLUNTEERING & LEADERSHIP     */
+/* ============================= */
+
+.volunteer-section {
+  text-align: center;
+}
+
+.volunteer-title {
+  font-size: 38px;
+  font-weight: 700;
+  color: var(--text-blue);
+  margin-bottom: 5px;
+}
+
+.volunteer-tagline {
+  font-size: 16px;
+  color: #9c7a2f;
+  margin-bottom: 40px;
+}
+
+.volunteer-grid {
+  max-width: 1200px;
+  margin: auto;
+  display: grid;
+  grid-template-columns: repeat(2,1fr);
+  gap: 26px;
+}
+
+.vol-card {
+  background: #ffffff;
+  padding: 32px;
+  border-radius: 20px;
+  text-align: left;
+  box-shadow: 0 12px 34px rgba(0,0,0,0.08);
+  transition: transform 0.25s cubic-bezier(0.22,1,0.36,1),
+              box-shadow 0.25s cubic-bezier(0.22,1,0.36,1);
+  cursor: pointer;
+}
+
+.vol-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 20px 50px rgba(0,0,0,0.12);
+}
+
+.vol-card h3 {
+  margin: 0 0 10px 0;
+  font-size: 20px;
+  font-weight: 600;
+  color: #1f2d40;
+}
+
+.vol-card p {
+  font-size: 14px;
+  color: #556987;
+  margin-bottom: 20px;
+}
+
+.vol-btn {
+  padding: 10px 20px;
+  border-radius: 999px;
+  border: none;
+  background: var(--blue-soft);
+  color: white;
+  cursor: pointer;
+  transition: 0.25s ease;
+  font-size: 14px;
+}
+
+.vol-btn:hover {
+  background: var(--blue-soft-2);
+  transform: translateY(-2px);
+}
+
+/* ============================= */
+/* ACADEMICS SECTION             */
+/* ============================= */
+
+.academics-section {
+  text-align: center;
+}
+.academics-title {
+  font-size: 38px;
+  font-weight: 700;
+  color: var(--text-blue);
+  margin-bottom: 5px;
+}
+
+.academics-tagline {
+  font-size: 16px;
+  color: #9c7a2f;
+  margin-bottom: 40px;
+}
+
+.academics-grid {
+  max-width: 1200px;
+  margin: auto;
+  display: grid;
+  grid-template-columns: repeat(3,1fr);
+  gap: 26px;
+}
+
+.acad-card {
+  background: #ffffff;
+  padding: 32px;
+  border-radius: 20px;
+  text-align: left;
+  box-shadow: 0 12px 34px rgba(0,0,0,0.08);
+  transition: transform 0.25s cubic-bezier(0.22,1,0.36,1),
+              box-shadow 0.25s cubic-bezier(0.22,1,0.36,1);
+  cursor: pointer;
+}
+
+.acad-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 20px 50px rgba(0,0,0,0.12);
+}
+
+.acad-card h3 {
+  margin: 0 0 10px 0;
+  font-size: 20px;
+  font-weight: 600;
+  color: #1f2d40;
+}
+
+.acad-card p {
+  font-size: 14px;
+  color: #556987;
+  margin-bottom: 20px;
+}
+
+.acad-btn {
+  padding: 10px 20px;
+  border-radius: 999px;
+  border: none;
+  background: var(--blue-soft);
+  color: white;
+  cursor: pointer;
+  transition: 0.25s ease;
+  font-size: 14px;
+}
+
+.acad-btn:hover {
+  background: var(--blue-soft-2);
+  transform: translateY(-2px);
+}
+
+
+/* ============================= */
+/* GLOBAL APPLE-STYLE SPACING    */
+/* ============================= */
+
+
+/* About needs extra top padding to clear the navbar nicely */
+.about-section {
+  padding-top: 120px;
+}
+
+/* ============================= */
+/* MODAL                         */
+/* ============================= */
+
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.45);
+  backdrop-filter: blur(6px);
+
+  display: flex;
+  justify-content: center;
+  align-items: center;   /* 🔑 THIS locks it */
+
+  padding: 20px;
+  z-index: 9998;
+}
+
+
+/* ============================= */
+/* IMPORTANT                        */
+/* ============================= */
+
+.modal {
+  background: rgba(255, 255, 255, 0.92);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+
+  color: #0a2342;
+  box-shadow:
+    0 40px 90px rgba(0,0,0,0.35),
+    inset 0 1px 0 rgba(255,255,255,0.08);
+  padding: 5px;          /* was 32px */
+  width: 86%;
+  max-width: 100%;
+  border-radius: 20px;
+  color: white;
+  animation: fadeUpModal 0.35s ease;
+  position: relative; /* REQUIRED */
+  margin-top: 0;
+  padding: 12px;   /* real content spacing */
+  max-height: 100vh;
+  overflow-y: auto;
+}
+
+
+.modal h2 {
+  margin: 0 0 10px 0;
+}
+
+.modal ul {
+  padding-left: 20px;
+}
+
+.modal li {
+  margin-bottom: 6px;
+}
+.modal-view-project {
+  position: absolute;
+  top: 20px;
+  right: 24px;
+
+  font-size: 14px;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.85);
+  text-decoration: none;
+
+  padding: 6px 12px;
+  border-radius: 999px;
+
+  background: rgba(6, 29, 56, 0.14);
+  backdrop-filter: blur(8px);
+
+  transition: 
+    transform 0.25s ease,
+    background 0.25s ease,
+    color 0.25s ease;
+}
+
+.modal-view-project:hover {
+  background: rgba(255, 255, 255, 0.16);
+  color: #ffffff;
+  transform: translateY(-2px);
+}
+
+
+.close-btn {
+  background: none !important;
+  border: none !important;
+  box-shadow: none !important;
+
+  color: rgba(255, 255, 255, 0.75);
+  font-size: 14px;
+  font-weight: 500;
+
+  padding: 6px 0;
+  border-radius: 0;
+
+  cursor: pointer;
+  transition: color 0.2s ease;
+}
+
+.close-btn:hover {
+  color: #ffffff;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+
+/* Modal animation */
+@keyframes fadeUpModal {
+  from { opacity: 0; transform: translateY(14px) scale(0.97); }
+  to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+.modal-hero-img {
+  width: 100%;
+  max-width: 540px;        /* prevents oversizing */
+  height: auto;            /* keeps aspect ratio */
+  display: block;
+  margin: 16px auto 24px;  /* centers + spacing */
+  border-radius: 12px;
+  opacity: 0.95;
+}
+
+.project-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.project-badge {
+
+  opacity: 0.9;
+}
+
+@media (max-width: 900px) {
+  .projects-stack {
+    grid-template-columns: 1fr;
+  }
+}
+
+
+
+/* ============================= */
+/* RESPONSIVE                    */
+/* ============================= */
+
+@media (max-width: 900px) {
+  .about-inner { grid-template-columns: 1fr; }
+  .projects-grid { grid-template-columns: 1fr; }
+  .experience-grid { grid-template-columns: 1fr; }
+
+  .main-nav {
+    width: 80vw;
+    max-width: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * { transition: none !important; animation: none !important; }
+  html { scroll-behavior: auto; }
+}
+
+
+section {
+  padding-top: 50px;
+  padding-bottom: 50px;
+}
+.about-modal-list {
+  list-style: none;
+  padding: 0;
+  margin: 20px 0 0;
+  display: flex;
+  flex-direction: column;
+  gap: 18px; /* controls vertical rhythm */
+}
+
+.about-modal-list li {
+  line-height: 1.6;
+}
+
+.about-modal-list strong {
+  display: block;
+  font-weight: 600;
+  margin-bottom: 6px;
+  letter-spacing: -0.01em;
+}
+
+.about-modal-list span {
+  display: block;
+  opacity: 0.95;
+  max-width: 60ch;
+}.about-modal-list {
+  list-style: none;
+  padding: 0;
+  margin: 20px 0 0;
+  display: flex;
+  flex-direction: column;
+  gap: 18px; /* controls vertical rhythm */
+}
+
+.about-modal-list li {
+  line-height: 1.6;
+}
+
+.about-modal-list strong {
+  display: block;
+  font-weight: 600;
+  margin-bottom: 6px;
+  letter-spacing: -0.01em;
+}
+
+.about-modal-list span {
+  display: block;
+  opacity: 0.95;
+  max-width: 60ch;
+}
+
+.about-step {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+}
+
+.about-step-icon {
+  width: 28px;
+  height: 28px;
+  margin-top: 2px;
+  opacity: 0.9;
+  flex-shrink: 0;
+}
+
+.about-step-icon {
+  filter: brightness(0) invert(1);
+}
+
+.featured-img {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+  border-radius: 16px;
+  margin-bottom: 16px;
+}
+
+
+
+
+.modal-overlay {
+  display: none;
+}
+
+.project-badge {
+  height: 29px;          /* ⬅ increase size */
+  width: auto;
+  margin-left: 6px;     /* spacing from text */
+  vertical-align: middle;
+  opacity: 0.95;
+}
+
+.project-badge {
+  transform: translateZ(0);
+  backface-visibility: hidden;
+}
+
+.modal-nav {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-bottom: 16px;
+}
+
+.modal-close-row {
+  display: flex;
+  margin-left: 4px;
+  justify-content: flex-start; /* aligns under buttons */
+}
+.modal {
+  padding-bottom:22px; /* reduce bottom space */
+}
+
+.back-btn {
+  background: none;        /* ❌ remove pill */
+  border: none;            /* ❌ remove outline */
+  padding: 0;              /* ❌ remove spacing box */
+  margin-top: 18px;
+  margin-right: 12px;
+
+  font-size: 20px;         /* arrow size */
+  font-weight: 600;
+  color: rgba(255,255,255,0.9);
+  cursor: pointer;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.back-btn:hover {
+  transform: translateX(-2px);
+  opacity: 0.8;
+}
+
+.modal-close-row {
+  margin-top: 8px;
+}
+
+.project-media img {
+  transition: transform 0.5s ease;
+}
+
+.project-card:hover .project-media img {
+  transform: scale(1.04);
+}
+.project-media {
+  position: relative;
+}
+
+.project-media::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 16px;
+  background: linear-gradient(
+    to bottom,
+    rgba(0,0,0,0) 40%,
+    rgba(0,0,0,0.15)
+  );
+}
+
+/* ================================
+   MORE PROJECTS – IMAGE FIX
+================================ */
+
+.more-projects .project-media {
+  height: 180px;              /* controlled preview height */
+  overflow: hidden;
+  border-radius: 16px;
+  margin-bottom: 16px;
+}
+
+.more-projects .project-media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;          /* Apple-style crop */
+  display: block;
+  transition: transform 0.5s ease;
+}
+
+.more-projects .project-card:hover .project-media img {
+  transform: scale(1.05);
+}
+.more-projects-grid {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(420px, 1fr));
+  gap: 32px;
+}
+
+/* Horizontal card */
+.more-projects .project-card {
+  display: grid;
+  grid-template-columns: 1.2fr 1fr;   /* image | text */
+  align-items: center;
+  gap: 24px;
+  padding: 22px;
+}
+
+/* ================================
+   APPLE STYLE ICON DIVIDER
+================================ */
+
+
+
+.section-divider {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 34px;
+  margin: 90px 0;
+  position: relative;
+}
+.section-divider .icon:nth-child(1) { transform: translateY(-12px) rotate(-4deg); }
+.section-divider .icon:nth-child(2) { transform: translateY(8px) rotate(6deg); }
+.section-divider .icon:nth-child(3) { transform: translateY(-6px) rotate(-2deg); }
+.section-divider .icon:nth-child(4) { transform: translateY(14px) rotate(3deg); }
+.section-divider .icon:nth-child(5) { transform: translateY(-10px) rotate(5deg); }
+.section-divider .icon:nth-child(6) { transform: translateY(6px) rotate(-6deg); }
+.section-divider .icon:nth-child(7) { transform: translateY(-14px) rotate(4deg); }
+.section-divider .icon:nth-child(8) { transform: translateY(10px) rotate(-3deg); }
+
+.section-divider img {
+  opacity: 0.55;
+  transition:
+    opacity 0.4s ease,
+    transform 0.6s cubic-bezier(0.22,1,0.36,1);
+}
+
+.section-divider img {
+  filter:
+    invert(14%)
+    sepia(28%)
+    saturate(520%)
+    hue-rotate(330deg)
+    brightness(88%)
+    contrast(115%);
+}
+
+
+.icon {
+  opacity: 0.45;
+  transition: 
+    opacity 0.35s ease,
+    transform 0.45s cubic-bezier(0.22,1,0.36,1);
+}
+
+/* Sizes */
+.icon.sm { width: 34px; }
+.icon.md { width: 42px; }
+.icon.lg { width: 52px; }
+.icon.xl { width: 74px; }
+
+/* Jumble offsets */
+.icon.up    { transform: translateY(-14px); }
+.icon.down  { transform: translateY(16px); }
+.icon.tilt  { transform: rotate(-6deg); }
+
+/* Hover effect */
+.section-divider img {
+  opacity: 0.85;
+  transition: opacity 0.35s ease, transform 0.45s ease;
+}
+
+
+.section-divider:hover img.up {
+  transform: translateY(-18px);
+}
+
+.section-divider:hover img.down {
+  transform: translateY(20px);
+}
+
+.section-divider:hover img.tilt {
+  transform: rotate(-10deg);
+}
+
+/* Dashboard text tabs (Apple-style pop) */
+.dashboard-nav {
+  display: flex;
+  gap: 28px;
+  margin-top: 20px;
+}
+
+.dashboard-tab {
+  background: none;
+  border: none;
+  padding: 6px 4px;
+  cursor: pointer;
+
+  font-size: 17px;
+  font-weight: 500;
+  color: rgba(255,255,255,0.85);
+  letter-spacing: -0.01em;
+  text-decoration: none;   /* 👈 important */
+
+  display: inline-flex;    /* 👈 keeps layout identical */
+  align-items: center;
+
+  transition:
+    transform 0.25s cubic-bezier(0.22,1,0.36,1),
+    color 0.25s ease,
+    text-shadow 0.25s ease;
+}
+
+/* Hover = pop */
+.dashboard-tab:hover {
+  transform: translateY(-3px) scale(1.04);
+  color: #ffffff;
+  text-shadow: 0 6px 18px rgba(255,255,255,0.35);
+}
+
+/* Optional: active state (when clicked / current) */
+.dashboard-tab.active {
+  transform: translateY(-2px) scale(1.03);
+  color: #ffffff;
+  text-shadow: 0 6px 20px rgba(255,255,255,0.4);
+}
+
+/* Apple-style text CTA (matches dashboard tabs) */
+.modal-link {
+  background: none;
+  border: none;
+  padding: 6px 4px;
+
+  font-size: 17px;
+  font-weight: 500;
+  color: rgba(255,255,255,0.9);
+  letter-spacing: -0.01em;
+  text-decoration: none;
+  cursor: pointer;
+
+  transition:
+    transform 0.25s cubic-bezier(0.22,1,0.36,1),
+    color 0.25s ease,
+    text-shadow 0.25s ease;
+}
+
+.modal-link:hover {
+  transform: translateY(-3px) scale(1.04);
+  color: #ffffff;
+  text-shadow: 0 6px 18px rgba(255,255,255,0.35);
+}
+
+.more-projects {
+  padding-top: 20px !important;
+  padding-bottom: 20px !important;
+}
+/* Modal text polish */
+.modal-text {
+  font-size: 14px;
+  line-height: 1.7;
+  opacity: 0.9;
+  margin-top: 10px;
+}
+
+/* Actions alignment */
+.modal-header {
+  display: flex;
+  align-items: flex-start;   /* IMPORTANT */
+  justify-content: space-between;
+  gap: 20px;
+  flex-wrap: wrap;           /* allows wrapping on smaller widths */
+}
+
+/* CTA container */
+.modal-actions {
+  display: flex;
+  gap: 14px;
+  flex-shrink: 0;            /* buttons NEVER shrink */
+}
+
+.modal-header h2 {
+  margin: 0;
+  max-width: calc(100% - 220px); /* reserve space for buttons */
+  line-height: 1.25;
+}
+
+/* CTA links */
+.modal-view-project {
+  font-size: 13px;
+  font-weight: 500;
+  color: #0a2342;
+  text-decoration: none;
+  padding: 6px 12px;
+  border-radius: 999px;
+  background: rgba(0,0,0,0.04);
+}
+
+.modal-view-project.secondary {
+  opacity: 0.7;
+}
+
+.modal-view-project:hover {
+  background: rgba(0,0,0,0.08);
+}
+/* Base modal image */
+.modal-hero-img {
+  border-radius: 18px;
+  transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* Special EDA image only */
+.eda-focus-img {
+  width: 780px;        /* bigger base size */
+  max-width: 100%;
+  cursor: zoom-in;
+}
+
+/* Hover zoom */
+.eda-focus-img:hover {
+  transform: scale(1.05);   /* STRONGER zoom */
+}
+
+/* Modal base (hidden state) */
+.modal-overlay {
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.modal {
+  transform: translateY(18px) scale(0.97);
+  opacity: 0;
+  transition:
+    transform 0.45s cubic-bezier(0.22, 1, 0.36, 1),
+    opacity 0.35s ease;
+}
+
+/* Visible state */
+.modal-overlay.show {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.modal-overlay.show .modal {
+  transform: translateY(0) scale(1);
+  opacity: 1;
+}
+
+/* LP Methodology image – larger than others */
+.lp-method-img {
+  max-width: 780px;     /* 👈 bigger */
+  width: 100%;
+}
+
+/* ============================= */
+/* EXPERIENCE – CARD UPGRADE     */
+/* ============================= */
+
+.exp-card {
+  padding: 30px;
+  border-radius: 22px;
+  max-width: 500px;
+}
+
+/* Image at top */
+.exp-img {
+  background: transparent;
+  mix-blend-mode: multiply;   /* blends white into card */
+}
+
+/* Subtle zoom on hover */
+.exp-card:hover .exp-img {
+  transform: scale(1.04);
+}
+
+/* Improve text hierarchy */
+.exp-card h3 {
+  font-size: 19px;
+}
+
+.exp-card p {
+  font-size: 14.5px;
+  line-height: 1.6;
+}
+
+.experience-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+/* ============================= */
+/* EXPERIENCE MODALS TUNING     */
+/* ============================= */
+
+.exp-modal {
+  max-width: 1200px;   /* wider */
+  padding: 14px 34px;  /* less vertical padding */
+}
+
+/* Reduce vertical spacing inside experience modals */
+.exp-modal h2 {
+  margin-bottom: 8px;
+}
+
+.exp-modal h3 {
+  margin-top: 16px;
+  margin-bottom: 6px;
+}
+
+.exp-modal ul {
+  margin-top: 20px;
+}
+
+.exp-modal li {
+  margin-bottom: 4px;
+  line-height: 1.55;
+}
+
+/* Prevent unnecessary tall feel */
+.exp-modal p {
+  margin-bottom: 10px;
+}
+
+/* Experience full-page layout */
+.experience-grid--full {
+  grid-template-columns: 1fr;     /* one per row */
+  max-width: 980px;
+  margin: 3rem auto 0;
+}
+
+.exp-card--full {
+  max-width: none;
+}
+.exp-card--full {
+  position: relative;
+  padding-right: 240px; /* space for logo */
+}
+/* Remove logo background + blend naturally */
+.exp-img {
+  background: transparent;
+  mix-blend-mode: multiply;   /* blends white into card */
+}
+
+
+.exp-header {
+  margin-top: 6px;
+}
+
+.exp-meta {
+  margin: 6px 0 0;
+  font-size: 13px;
+  color: #556987;
+}
+
+.exp-summary {
+  margin-top: 12px;
+  font-size: 14.5px;
+  line-height: 1.65;
+  color: #2b3a52;
+}
+
+.exp-block {
+  margin-top: 18px;
+}
+
+.exp-block h4 {
+  margin: 0 0 8px 0;
+  font-size: 14px;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  color: #1f2d40;
+}
+
+.exp-block ul {
+  margin: 0;
+  padding-left: 18px;
+}
+
+.exp-block li {
+  margin-bottom: 6px;
+  line-height: 1.55;
+}
+
+/* simple tag pills for tools */
+.exp-tags {
+  list-style: none;
+  padding-left: 0;
+  display: flex;
+  flex-wrap: nowrap;
+  gap: 10px;
+  overflow-x: auto;     /* allows scroll if needed */
+  white-space: nowrap;
+}
+
+.exp-tags li {
+  padding: 5px 12px;
+  border-radius: 999px;
+  background: rgba(10,35,66,0.08);
+  color: #1f2d40;
+  font-size: 13px;
+  margin: 0;
+}
+
+/* Logo wrapper – pinned inside the card */
+.exp-logo-wrap {
+  position: absolute;
+  top: 28px;
+  right: 32px;
+  z-index: 2;
+}
+
+/* Logo itself */
+.exp-logo-wrap .exp-img {
+  width: 150px;
+  background: transparent;
+  height: auto;
+  object-fit: contain;
+  opacity: 0.95;
+  filter: contrast(1.05);
+}
+
+/* ============================= */
+/* ABOUT – APPLE SEGMENTED TOGGLE */
+/* ============================= */
+
+.about-philosophy-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 0;
+  margin-top: 32px;
+
+  background: rgba(10,35,66,0.04);;
+  border-radius: 999px;
+  padding: 4px;
+
+  box-shadow:
+    inset 0 0 0 1px rgba(10,35,66,0.08);
+}
+
+.philo-btn {
+  border: none;
+  background: transparent;
+  padding: 10px 22px;
+  border-radius: 999px;
+
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  min-width: 150px;
+
+  color: #4a5f7a;
+  cursor: pointer;
+
+  transition:
+    background 0.25s cubic-bezier(0.22,1,0.36,1),
+    color 0.25s ease,
+    box-shadow 0.25s ease,
+    transform 0.25s ease;
+}
+
+/* Active (selected) state */
+.philo-btn.active {
+  background: #ffffff;
+  color: #0a2342;
+
+  box-shadow:
+    0 6px 16px rgba(0,0,0,0.12);
+}
+
+/* Hover (subtle, Apple-like) */
+.philo-btn:not(.active):hover {
+  color: #0a2342;
+}
+
+/* Press feedback */
+.philo-btn:active {
+  transform: scale(0.98);
+}
+
+.about-left {
+  display: flex;
+  flex-direction: column;
+  gap: 28px;   /* consistent Apple spacing */
+}
+
+
+/* ============================= */
+/* APPLE-STYLE SCROLL TEXT       */
+/* ============================= */
+
+.apple-scroll-text {
+  opacity: 0.35;
+  filter: blur(0.4px);
+  transform: translateY(14px);
+  transition:
+    opacity 0.8s cubic-bezier(0.22,1,0.36,1),
+    transform 0.8s cubic-bezier(0.22,1,0.36,1),
+    filter 0.8s cubic-bezier(0.22,1,0.36,1);
+  will-change: opacity, transform, filter;
+}
+
+/* When text is centered / active */
+.apple-scroll-text.in-focus {
+  opacity: 1;
+  filter: blur(0);
+  transform: translateY(0);
+}
+
+/* Optional emphasis word (Apple-style bold pop) */
+.apple-scroll-text strong {
+  color: #ffffff;
+  font-weight: 600;
+}
+
+.apple-scroll-text {
+  color: rgba(28,28,30,0.85);
+}
+
+.apple-scroll-text.in-focus {
+  color: rgba(28,28,30,1);
+}
+
+/* ============================= */
+/* APPLE SHEET MODAL (ABOUT)     */
+/* ============================= */
+
+.apple-modal {
+  background: rgba(255,255,255,0.92);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+
+  color: #0a2342;
+  border-radius: 28px;
+
+  width: min(860px, 92vw);
+  padding: 36px 40px 28px;
+
+  box-shadow:
+    0 40px 120px rgba(0,0,0,0.25),
+    inset 0 1px 0 rgba(255,255,255,0.6);
+
+  transform: translateY(18px) scale(0.98);
+  opacity: 0;
+  transition:
+    transform 0.45s cubic-bezier(0.22,1,0.36,1),
+    opacity 0.35s ease;
+}
+
+.modal-overlay.show .apple-modal {
+  transform: translateY(0) scale(1);
+  opacity: 1;
+}
+
+/* Header */
+.apple-modal h2 {
+  font-size: 26px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  margin-bottom: 22px;
+}
+
+/* Card list */
+.apple-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-top: 10px;
+}
+
+/* Individual card */
+.apple-item {
+  background: rgba(10,35,66,0.04);
+  border-radius: 18px;
+  padding: 18px 20px;
+
+  display: flex;
+  gap: 14px;
+
+  transition:
+    background 0.25s ease,
+    transform 0.25s cubic-bezier(0.22,1,0.36,1);
+}
+
+.apple-item:hover {
+  background: rgba(10,35,66,0.07);
+  transform: translateY(-2px);
+}
+
+/* Icon */
+.apple-icon {
+  width: 26px;
+  height: 26px;
+  margin-top: 2px;
+  opacity: 0.95;
+  flex-shrink: 0;
+
+  /* Dark Apple-style blue */
+  filter: invert(14%) sepia(65%) saturate(1200%)
+          hue-rotate(195deg) brightness(88%) contrast(105%);
+}
+#how-i-work-modal .apple-icon {
+  filter: invert(14%) sepia(65%) saturate(1200%)
+          hue-rotate(195deg) brightness(88%) contrast(105%);
+}
+
+/* Text */
+.apple-item strong {
+  display: block;
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  margin-bottom: 6px;
+}
+
+.apple-item span {
+  display: block;
+  font-size: 14px;
+  line-height: 1.6;
+  color: #2b3a52;
+  max-width: 62ch;
+}
+
+/* Footer */
+.apple-modal-footer {
+  margin-top: 22px;
+  display: flex;
+  justify-content: flex-start;
+}
+
+/* Apple modal shell */
+.modal-apple {
+  max-width: 760px;
+  padding: 42px;
+}
+
+/* Title */
+.modal-title {
+  font-size: 28px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  margin-bottom: 28px;
+}
+
+/* Steps container */
+.apple-steps {
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+}
+
+/* Individual row */
+.apple-step {
+  display: flex;
+  gap: 18px;
+  padding: 18px 20px;
+
+  border-radius: 16px;
+  background: rgba(255,255,255,0.06);
+  backdrop-filter: blur(6px);
+
+  transition:
+    transform 0.35s cubic-bezier(0.22,1,0.36,1),
+    background 0.35s ease;
+}
+
+/* Hover = Apple subtle lift */
+.apple-step:hover {
+  transform: translateY(-3px);
+  background: rgba(255,255,255,0.1);
+}
+
+/* Icons */
+.apple-icon {
+  width: 26px;
+  height: 26px;
+  margin-top: 2px;
+  filter: brightness(0) invert(1);
+  opacity: 0.9;
+}
+
+/* Text */
+.apple-step strong {
+  display: block;
+  font-size: 15px;
+  font-weight: 600;
+  margin-bottom: 6px;
+  letter-spacing: -0.01em;
+}
+
+.apple-step p {
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.6;
+  opacity: 0.9;
+}
+
+/* Close button — How I Work modal only */
+#how-i-work-modal .close-btn {
+  background: rgba(10, 35, 66, 0.08);   /* soft blue */
+  color: #0a2342;                      /* deep blue text */
+  border: 1px solid rgba(10, 35, 66, 0.18);
+}
+
+/* Hover */
+#how-i-work-modal .close-btn:hover {
+  background: rgba(10, 35, 66, 0.14);
+  transform: translateY(-1px);
+}
+
+/* ============================= */
+/* WHAT I DON’T DO – STYLE 4 (ALT COLOR) */
+/* ============================= */
+
+#what-i-dont-do-modal .modal-apple {
+  background: rgba(250, 249, 247, 0.96); /* warm stone */
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+
+  color: #1f2328; /* graphite text */
+  border-radius: 28px;
+
+  box-shadow:
+    0 40px 120px rgba(0,0,0,0.22),
+    inset 0 1px 0 rgba(255,255,255,0.7);
+}
+
+/* Title */
+#what-i-dont-do-modal .modal-title {
+  color: #2b2f36;
+}
+
+/* Step cards */
+#what-i-dont-do-modal .apple-step {
+  background: rgba(120, 40, 40, 0.04); /* muted crimson tint */
+  border-radius: 16px;
+}
+
+/* Hover = firmer intent */
+#what-i-dont-do-modal .apple-step:hover {
+  background: rgba(120, 40, 40, 0.08);
+  transform: translateY(-3px);
+}
+
+/* Text */
+#what-i-dont-do-modal .apple-step strong {
+  color: #7a2e2e; /* deep muted red */
+}
+
+#what-i-dont-do-modal .apple-step p {
+  color: #2a2f35;
+}
+
+/* DARKER ICONS (no invert, no washout) */
+#what-i-dont-do-modal .apple-icon {
+  width: 26px;
+  height: 26px;
+  opacity: 1;
+
+  /* dark graphite + red bias */
+  filter: invert(9%) sepia(12%) saturate(900%)
+          hue-rotate(345deg) brightness(85%) contrast(115%);
+}
+
+/* Close button – restrained */
+#what-i-dont-do-modal .close-btn {
+  color: #6b2b2b;
+}
+
+#what-i-dont-do-modal .close-btn:hover {
+  color: #4a1f1f;
+}
+
+.main-nav.hidden {
+  transform: translateY(-120px);
+  opacity: 0;
+}
+/* ============================= */
+/* APPLE SECTION POP-IN (STRONG) */
+/* ============================= */
+
+.apple-section {
+  transform: translateY(64px) scale(0.96);
+  opacity: 0;
+  transition:
+    transform 1s cubic-bezier(0.22,1,0.36,1),
+    opacity 0.8s ease;
+  will-change: transform, opacity;
+}
+
+.apple-section.in-view {
+  transform: translateY(0) scale(1);
+  opacity: 1;
+}
+.skills-inner {
+  transform: translateY(32px) scale(0.98);
+  opacity: 0;
+  transition:
+    transform 0.9s cubic-bezier(0.22,1,0.36,1) 0.25s,
+    opacity 0.7s ease 0.25s;
+    
+}
+
+.apple-section.in-view .skills-inner {
+  transform: translateY(0) scale(1);
+  opacity: 1;
+}
+
+#how-i-work-modal {
+  padding-top: 50px;   /* was 100px */
+}
+
+body.modal-open .main-nav-wrapper {
+  background: transparent;
+  backdrop-filter: none;
+}
+
+/* ============================= */
+/* PORTFOLIO MODAL – FIXED       */
+/* ============================= */
+
+.modal-portfolio {
+  padding: 28px 34px 24px;   /* tighter vertical rhythm */
+  max-width: 860px;
+}
+
+/* Reduce space under title */
+.modal-portfolio h2 {
+  margin-bottom: 12px;
+}
+
+/* Tighten text blocks */
+.modal-portfolio p,
+.modal-portfolio ul {
+  margin-bottom: 12px;
+}
+
+/* Fix excessive bottom gap */
+.modal-portfolio .close-btn {
+  margin-top: 12px;
+}
+
+#portfolio-modal {
+  padding-top: 40px;   /* instead of 100px */
+}
+
+/* ============================= */
+/* MODAL TEXT COLOR FIX          */
+/* ============================= */
+
+.modal {
+  color: #1c1c1e; /* Apple dark text */
+}
+
+/* Headings inside modals */
+.modal h1,
+.modal h2,
+.modal h3 {
+  color: var(--blue-soft); /* Oxford blue */
+}
+
+/* Paragraphs & lists */
+.modal p,
+.modal li,
+.modal span {
+  color: #1c1c1e;
+}
+
+/* Slightly softer secondary text */
+.modal .modal-text {
+  color: #2b2f36;
+}
+
+.modal-link,
+.dashboard-tab {
+  color: var(--blue-soft);
+}
+
+.modal-link:hover,
+.dashboard-tab:hover {
+  color: var(--blue-soft-2);
+}
+
+.modal .close-btn,
+.modal .back-btn {
+  color: rgba(28,28,30,0.7);
+}
+
+.modal .close-btn:hover,
+.modal .back-btn:hover {
+  color: var(--blue-soft);
+}
+
+/* =========================================
+   FIX: MODAL SUB-NAV PILLS (APPLE STYLE)
+   ========================================= */
+
+/* Base pill style inside modals only */
+.modal .about-toggle.secondary {
+  background: rgba(28, 28, 30, 0.08);   /* darker neutral */
+  color: #1c1c1e;
+  border: 1px solid rgba(28, 28, 30, 0.12);
+
+  padding: 8px 16px;
+  border-radius: 999px;
+  font-size: 13px;
+  font-weight: 500;
+
+  transition:
+    background 0.25s ease,
+    transform 0.25s cubic-bezier(0.22,1,0.36,1),
+    box-shadow 0.25s ease;
+}
+
+/* Hover */
+.modal .about-toggle.secondary:hover {
+  background: rgba(28, 28, 30, 0.14);
+  transform: translateY(-1px);
+}
+
+/* Active (current sub-modal) */
+.modal .about-toggle.secondary.active {
+  background: rgba(10, 35, 66, 0.14); /* Oxford blue tint */
+  color: var(--blue-soft);
+  border-color: rgba(10, 35, 66, 0.25);
+
+  box-shadow: 0 4px 14px rgba(10, 35, 66, 0.15);
+}
+
+.modal-hero-img--small {
+  max-height: 480px;
+  width: auto;
+  margin: 0 auto 20px;
+  display: block;
+}
+
+</style>
+</head>
+
+<body>
+
+<!-- ========================= -->
+<!-- NAVBAR                    -->
+<!-- ========================= -->
+
+<div class="main-nav-wrapper">
+  <nav class="main-nav scroll-section in-view" id="navbar">
+    <a href="#about" class="active">About</a>
+    <a href="#skills">Skills</a>
+    <a href="#projects">Projects</a>
+    <a href="#experience">Experience</a>
+    <a href="#volunteering">Volunteering</a>
+    <a href="#academics">Academics</a> 
+  </nav>
+</div>
+
+<!-- ========================= -->
+<!-- ABOUT SECTION             -->
+<!-- ========================= -->
+
+<section class="about-section scroll-section" id="about">
+  <div class="about-inner">
+
+    <div class="about-left reveal-item">
+      <div class="about-title">About Me</div>
+
+      <div class="about-photo-card parallax" data-parallax-strength="18">
+        <img src="Images/About/Emoji.png" alt="Profile">
+      </div>
+    </div>
+
+    <div class="reveal-item">
+      <div class="about-sub">Statistical Data Scientist </div>
+
+
+      <p class="about-intro apple-scroll-text">
+        Nearly 47% of executives believe data science is critical to business success.
+        This page is for the other 53%, Those who haven’t yet seen how disciplined
+        data science turns uncertainty into defensible decisions.
+      </p>
+      
+      <p class="about-intro about-intro-lead">
+        Hello, I’m Siddhant
+      </p>
+      
+      <p class="about-intro">
+        I work with data because I’m fascinated by how mathematical ideas developed centuries ago still govern modern decision-making today. Statistics and mathematics are rare disciplines where foundational ideas don’t age, they compound.
+      </p>
+      
+      <p class="about-intro">
+      <strong>What draws me to data science is its honesty.</strong>
+Every conclusion must be justified, every assumption examined and every result defensible under scrutiny. There is no room for intuition without evidence. Numbers either support a claim or they don’t.
+      </p>
+      
+      <p class="about-intro">
+        My approach is fundamentals-first. Before models, dashboards, or predictions, I focus on the data itself where it came from, what it represents and whether the results actually make sense in context.
+      </p>
+      
+      <p class="about-intro">
+        At my core, I’m curious. I enjoy exploring data from angles others overlook, questioning patterns, testing alternative explanations and extracting insights that aren’t immediately obvious.
+      </p>
+      
+      <p class="about-intro apple-scroll-text">
+        Looking ahead, I’m seeking graduate or early-career roles in data science and analytics where statistical reasoning and decision support matter more than model novelty.
+      </p>
+
+
+    </div>
+
+<!-- ABOUT PHILOSOPHY TOGGLES -->
+<div class="about-philosophy-toggle">
+  <button class="philo-btn active" data-modal="how-i-work-modal">
+    How I Work
+  </button>
+  <button class="philo-btn" data-modal="what-i-dont-do-modal">
+    What I Don’t Do
+  </button>
+</div>
+
+  </div>
+</section>
+
+
+<!-- ========================= -->
+<!-- SKILLS SECTION            -->
+<!-- ========================= -->
+
+<section class="skills-section scroll-section apple-section" id="skills">
+
+  <h2 class="skills-main-title reveal-item">Skills & Strengths</h2>
+  <p class="skills-tagline reveal-item">What really makes a difference in how I work</p>
+
+  <div class="skills-inner reveal-item">
+
+    <!-- TABS -->
+    <div class="skills-tabs">
+      <!-- Soft Skills -->
+      <button class="skills-tab-btn active" data-skill-tab="soft">
+        <span class="tab-icon">
+          <svg viewBox="0 0 24 24">
+            <circle cx="12" cy="7" r="4"></circle>
+            <path d="M5 21c0-4 3-7 7-7s7 3 7 7"></path>
+          </svg>
+        </span>
+        Soft Skills
+      </button>
+
+      <!-- Technical -->
+      <button class="skills-tab-btn" data-skill-tab="technical">
+        <span class="tab-icon">
+          <svg viewBox="0 0 24 24">
+            <circle cx="12" cy="12" r="3"></circle>
+            <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 
+            2 0 1 1-2.83 2.83l-.06-.06a1.65 
+            1.65 0 0 0-1.82-.33 1.65 1.65 
+            0 0 0-1 1.51V22a2 2 0 0 
+            1-4 0v-.09a1.65 1.65 0 0 
+            0-1-1.51 1.65 1.65 
+            0 0 0-1.82.33l-.06.06a2 
+            2 0 1 1-2.83-2.83l.06-.06a1.65 
+            1.65 0 0 0 .33-1.82 1.65 1.65 
+            0 0 0-1.51-1H2a2 2 0 0 
+            1 0-4h.09a1.65 1.65 0 0 
+            0 1.51-1 1.65 1.65 
+            0 0 0-.33-1.82l-.06-.06a2 
+            2 0 1 1 2.83-2.83l.06.06a1.65 
+            1.65 0 0 0 1.82.33h.09a1.65 
+            1.65 0 0 0 1-1.51V2a2 2 0 0 
+            1 4 0v.09a1.65 1.65 0 0 
+            0 1 1.51h.09a1.65 1.65 
+            0 0 0 1.82-.33l.06-.06a2 
+            2 0 1 1 2.83 2.83l-.06.06a1.65 
+            1.65 0 0 0-.33 1.82v.09a1.65 
+            1.65 0 0 0 1.51 1H22a2 2 0 0 1 0 4h-.09a1.65 
+            1.65 0 0 0-1.51 1z"/>
+          </svg>
+        </span>
+        Technical Skills
+      </button>
+
+      <!-- Theory -->
+      <button class="skills-tab-btn" data-skill-tab="theory">
+        <span class="tab-icon">
+          <svg viewBox="0 0 24 24">
+            <polygon points="12 2 2 7 12 12 22 7 12 2"></polygon>
+            <polyline points="2 17 12 22 22 17"></polyline>
+            <polyline points="2 12 12 17 22 12"></polyline>
+          </svg>
+        </span>
+        Theoretical Concepts
+      </button>
+    </div>
+
+    <!-- PANELS -->
+    <div id="soft" class="skills-panel active">
+      <ul class="skills-list">
+        <li>Breaking vague or ill-defined problems into clear, testable analytical questions.</li>
+        <li>Explicitly identifying assumptions, constraints, and analytical trade-offs.</li>
+        <li>Strong statistical reasoning, prioritising evidence over intuition-led decisions.</li>
+        <li>Ability to explain complex models and results in clear, non-technical language.</li>
+        <li>Hypothesis-driven thinking with attention to validity, robustness, and detail.</li>
+        <li>Awareness of ethics, data misuse, and the real-world impact of analytical decisions.</li>
+      </ul>
+    </div>
+    
+    <div id="technical" class="skills-panel">
+      <ul class="skills-list">
+        <li>
+          Python for data analysis and modelling, including core data science libraries
+          (NumPy, Pandas, scikit-learn) and structured analytical workflows.
+        </li>
+        <li>
+          Machine Learning & Deep Learning — experience with supervised and unsupervised methods,
+          strong mathematical foundations, ability to derive core concepts, and rigorous model evaluation.
+        </li>
+        <li>
+          SQL for analytical workflows, including complex joins, aggregations, CTEs,
+          data ingestion, ERD-based schema design, and star/snowflake dimensional modelling.
+        </li>
+        <li>Exploratory data analysis, feature engineering, data validation, and data wrangling.</li>
+        <li>Power BI dashboards for exploratory analysis and decision-focused insights.</li>
+        <li>
+          End-to-end analytical workflows covering data ingestion, structured data analysis,
+          model development, evaluation, and deployment guided by statistical decision-making.
+        </li>
+      </ul>
+    </div>
+    
+    <div id="theory" class="skills-panel">
+      <ul class="skills-list">
+        <li>
+          Probability theory and statistics, including descriptive statistics,
+          probability distributions, hypothesis testing, and inferential methods
+          such as normality testing.
+        </li>
+        <li>Linear algebra fundamentals and optimisation-focused calculus.</li>
+        <li>Mathematical derivation of machine learning models and evaluation techniques.</li>
+        <li>Linear programming and constraint-based optimisation.</li>
+        <li>
+          Applied analytics across domains such as digital business,
+          supply chain analytics, and marketing analytics.
+        </li>
+        <li>
+          Natural language processing including sentiment analysis,
+          topic modelling, LDA, and social media analytics.
+        </li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<div class="section-divider">
+  <img src="Images/Icons/chart-donut.svg" class="icon xl up">
+  <img src="Images/Icons/functiondiv.svg" class="icon sm down">
+  <img src="Images/Icons/graphdiv.svg" class="icon xl up">
+  <img src="Images/Icons/ninediv.svg" class="icon md">
+  <img src="Images/Icons/pydiv.svg" class="icon sm tilt">
+  <img src="Images/Icons/trenddiv.svg" class="icon lg down">
+  <img src="Images/Icons/visualdiv.svg" class="icon xl tilt">
+  <img src="Images/Icons/warning.svg" class="icon sm up">
+</div>
+
+<!-- ========================= -->
+<!-- PROJECTS SECTION          -->
+<!-- ========================= -->
+
+<section class="projects-section scroll-section apple-section" id="projects">
+
+  <h2 class="projects-main-title reveal-item">Projects</h2>
+  <p class="projects-tagline reveal-item">Applied projects across Business Analytics & Data Science</p>
+
+  <h3 class="featured-title reveal-item">Featured</h3>
+
+  <div class="projects-grid">
+
+    <div class="project-card reveal-item parallax" data-parallax-strength="12" data-modal="alz-overview-modal">
+
+      <img
+    src="Images/Projects/alzheimers-overview.jpg"
+    alt="Alzheimer’s disease brain illustration"
+    class="featured-img"
+  >
+
+  <h3 class="project-title">
+    Alzheimer’s ML Diagnosis
+    <img 
+      src="Images/Icons/google-logo2.svg" 
+      alt="Google Capstone Project"
+      title="Google Data Analytics Capstone"
+      class="project-badge"
+      loading="lazy"
+    >
+  </h3>
+      <p>Statistical and machine-learning analysis of clinical features to identify early Alzheimer’s risk signals.</p>
+    </div>
+
+
+
+    <div class="project-card reveal-item parallax" data-parallax-strength="16" data-modal="consulting-modal">
+
+      <img
+    src="Images/Projects/gisproject.jpg"
+    alt="Consulting project"
+    class="featured-img"
+  >
+
+  <h3 class="project-title">
+    Business Analytics Capstone
+    <img 
+      src="Images/Icons/deakinl.png" 
+      alt="Consulting Project"
+      title="Consulting project"
+      class="project-badge"
+      loading="lazy"
+    >
+  </h3>
+
+    
+
+      <p>Analytics driven site selection for an IB-style school entering the Australian market.</p>
+    </div>
+
+    <div class="project-card reveal-item parallax" data-parallax-strength="12" data-modal="sql-modal">
+
+      <img
+    src="Images/Projects/sqlpic.jpg"
+    alt="SQL Analytics project"
+    class="featured-img"
+  >
+
+      <h3>HR Analytics Case Study
+        <img 
+      src="Images/Icons/sqlserver.png" 
+      alt="SQL Analytics Project"
+      title="SQL Analytics project"
+      class="project-badge"
+      loading="lazy"
+    >
+      </h3>
+      <p>End-to-end workforce and salary analysis using relational databases.</p>
+    </div>
+
+  </div>
+<!-- ========================= -->
+<!-- More Projects          -->
+<!-- ========================= -->
+<h3 class="featured-title reveal-item" style="margin-top: 50px;">More Projects</h3>
+
+<section class="more-projects">
+  <div class="more-projects-grid">
+
+    <!-- BI -->
+    <div class="project-card reveal-item parallax"
+         data-parallax-strength="8"
+         data-modal="bi-modal">
+      <div class="project-media">
+        <img src="Images/Projects/powerbicover.jpg" alt="BI Dashboards preview">
+      </div>
+      <div class="project-content">
+        <h3>
+          Power BI Analytics
+          <img src="Images/Icons/chart-donut.svg" class="project-badge" />
+        </h3>
+        <p>Visual analytics for financial & regional decisions.</p>
+        <span class="project-cta"> →</span>
+      </div>
+    </div>
+
+    <!-- NLP -->
+    <div class="project-card reveal-item parallax"
+         data-parallax-strength="8"
+         data-modal="nlp-modal">
+      <div class="project-media">
+        <img src="Images/Projects/nlpcover.jpg" alt="NLP Topic Modelling preview">
+      </div>
+      <div class="project-content">
+        <h3>
+          NLP On Twitter Data
+          <img src="Images/Icons/textpr.svg" class="project-badge" />
+        </h3>
+        <p>Sentiment analysis and LDA topic modelling on large-scale social text data.</p>
+        <span class="project-cta"> →</span>
+      </div>
+    </div>
+
+    <!-- LP -->
+    <div class="project-card reveal-item parallax"
+         data-parallax-strength="8"
+         data-modal="portfolio-modal">
+      <div class="project-media">
+        <img src="Images/Projects/lp.jpg" alt="Portfolio Optimisation preview">
+      </div>
+      <div class="project-content">
+        <h3>
+          Portfolio Optimisation
+          <img src="Images/Icons/linelp.svg" class="project-badge" />
+        </h3>
+        <p>Sharpe-ratio driven portfolio optimisation with risk constraints.</p>
+        <span class="project-cta"> →</span>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+
+
+</section>
+
+<div class="section-divider">
+  <img src="Images/Icons/exp1.svg" class="icon xl up">
+  <img src="Images/Icons/exp2.svg" class="icon sm down">
+  <img src="Images/Icons/exp3.svg" class="icon xl up">
+  <img src="Images/Icons/exp4.svg" class="icon md">
+  <img src="Images/Icons/exp5.svg" class="icon sm tilt">
+</div>
+
+
+
+
+<!-- ========================= -->
+<!-- EXPERIENCE SECTION        -->
+<!-- ========================= -->
+
+<section id="experience" class="experience-section scroll-section apple-section">
+  <div class="experience-inner">
+
+    <h2 class="experience-title reveal-item">Experience</h2>
+    <p class="experience-tagline reveal-item">Where I learned by doing</p>
+
+    <div class="experience-grid experience-grid--full">
+
+      <!-- PwC -->
+<article class="exp-card exp-card--full reveal-item parallax" data-parallax-strength="10">
+  <div class="exp-logo-wrap">
+    <img src="Images/Projects/pwc.png" class="exp-img" alt="PwC India">
+  </div>
+
+  <div class="exp-header">
+    <h3>PwC India — Data Science Intern</h3>
+    <p class="exp-meta"><em>Advisory · Financial Services · India</em></p>
+  </div>
+
+  <p class="exp-summary">
+    Advisory analytics internship supporting a confidential credit-risk engagement,
+    where transactional financial data was analysed to support a client-facing
+    credit card default classification model.
+  </p>
+
+  <div class="exp-block">
+    <h4>What I Worked On</h4>
+    <ul>
+      <li><strong>Situation:</strong> Joined an advisory team working on a highly confidential
+          credit-risk project involving sensitive financial and transactional data.</li>
+      <li><strong>Task:</strong> Support senior associates by preparing clean, analysis-ready data
+          and contributing to modelling discussions.</li>
+      <li><strong>Action:</strong> Cleaned and structured large transactional datasets in Excel,
+          performed validation checks, and supported exploratory analysis.</li>
+      <li><strong>Action:</strong> Assisted senior associates during classification model
+          development, contributing ideas around pruning and avoiding overfitting.</li>
+      <li><strong>Action:</strong> Presented learnings and modelling intuition to managers,
+          focusing on interpretability and risk rather than just accuracy.</li>
+    </ul>
+  </div>
+
+  <div class="exp-block">
+    <h4>Tools & Techniques</h4>
+    <ul class="exp-tags">
+      <li>Excel (financial transactions)</li>
+      <li>Python (analysis support)</li>
+      <li>Classification models</li>
+      <li>Client presentations</li>
+    </ul>
+  </div>
+
+  <div class="exp-block">
+    <h4>Key Learnings</h4>
+    <ul>
+      <li><strong>Result:</strong> Contributed to a model that was finalised and later deployed
+          for the client.</li>
+      <li>Learned how critical <strong>data confidentiality and anonymisation</strong> are in
+          financial analytics (tokenisation, masking, temporary IDs).</li>
+      <li>Understood that analytics in industry is as much about governance and communication
+          as it is about modelling.</li>
+      <li>Developed confidence explaining technical work to non-technical stakeholders.</li>
+    </ul>
+  </div>
+</article>
+
+
+<!-- Water Polo Australia -->
+<article class="exp-card exp-card--full reveal-item parallax" data-parallax-strength="10">
+  <div class="exp-logo-wrap">
+    <img src="Images/Projects/wpa.jpg.avif" class="exp-img" alt="Water Polo Australia">
+  </div>
+
+  <div class="exp-header">
+    <h3>Water Polo Australia — Analytics Consulting Intern</h3>
+    <p class="exp-meta">Consulting · Australia</p>
+  </div>
+
+  <p class="exp-summary">
+    Consulting engagement focused on feasibility analysis, stakeholder alignment,
+    and decision support for open-water infrastructure under real-world constraints.
+  </p>
+
+  <div class="exp-block">
+    <h4>What I Worked On</h4>
+    <ul>
+      <li><strong>Situation:</strong> WPA required a feasibility assessment for open-water
+          infrastructure involving safety, regulation, cost, and participation trade-offs.</li>
+      <li><strong>Task:</strong> Support the project through structured analysis, requirement
+          clarification, and client-ready recommendations.</li>
+      <li><strong>Action:</strong> Led the design of the WPA-led feasibility model, framing
+          trade-offs rather than chasing a single “best” answer.</li>
+      <li><strong>Action:</strong> Translated unclear client objectives into clear questions
+          that guided analysis and discussion.</li>
+      <li><strong>Action:</strong> Iterated recommendations mid-project based on stakeholder
+          feedback and changing priorities.</li>
+    </ul>
+  </div>
+
+  <div class="exp-block">
+    <h4>Tools & Techniques</h4>
+    <ul class="exp-tags">
+      <li>Excel</li>
+      <li>PowerPoint</li>
+      <li>Business Analysis</li>
+      <li>Stakeholder Engagement</li>
+      <li>Feasibility Modelling</li>
+      <li>Jira</li>
+    </ul>
+  </div>
+
+  <div class="exp-block">
+    <h4>Key Learnings</h4>
+    <ul>
+      <li><strong>Result:</strong> Delivered a structured feasibility and recommendation
+          framework aligned with client priorities.</li>
+      <li>Learned that asking the <strong>right questions early</strong> is more valuable
+          than complex analysis.</li>
+      <li>Developed strong consulting fundamentals: iteration, stakeholder communication,
+          and decision-focused delivery.</li>
+      <li>Understood that feasibility and adoption matter as much as analytical correctness.</li>
+    </ul>
+  </div>
+</article>
+
+    </div>
+  </div>
+</section>
+
+<div class="section-divider">
+  <img src="Images/Icons/vol1.svg" class="icon xl up">
+  <img src="Images/Icons/vol2.svg" class="icon sm down">
+  <img src="Images/Icons/vol3.svg" class="icon xl up">
+  <img src="Images/Icons/vol4.svg" class="icon md">
+  <img src="Images/Icons/vol5.svg" class="icon md tilt">
+  <img src="Images/Icons/vol6.svg" class="icon xl tilt">
+</div>
+
+
+<!-- ========================= -->
+<!-- VOLUNTEERING & LEADERSHIP -->
+<!-- ========================= -->
+
+<section class="volunteer-section scroll-section apple-section" id="volunteering">
+
+  <h2 class="volunteer-title reveal-item">Volunteering & Leadership</h2>
+  <p class="volunteer-tagline reveal-item">Roles that shaped my analytical and mentoring skills.</p>
+
+  <div class="volunteer-grid">
+
+    <!-- Analytics & AI Officer -->
+    <div class="vol-card reveal-item parallax"
+     data-parallax-strength="12"
+     data-modal="vol-officer-modal">
+
+  <img
+    src="Images/Projects/volun.jpg"
+    alt="Analytics & AI Officer volunteering"
+    class="featured-img"
+  >
+
+  <h3 class="project-title">
+    <strong>Analytics & AI Officer</strong> — <em>DBAS</em>
+    <img 
+      src="Images/Icons/vol.svg" 
+      alt="Volunteering & Leadership"
+      title="Volunteering & Leadership Role"
+      class="project-badge"
+      loading="lazy"
+    >
+  </h3>
+
+  <p>
+    Mentored analytics students, created learning resources,
+    published a mathematical article and supported analytics-focused events.
+  </p>
+
+  <button class="vol-btn">View Details</button>
+</div>
+
+    
+
+    <!-- Math Mentor -->
+    <div class="vol-card reveal-item parallax" data-parallax-strength="10" data-modal="vol-math-modal">
+
+      <img
+    src="Images/Projects/math1.jpg"
+    alt="Alzheimer’s disease brain illustration"
+    class="featured-img"
+  >
+  <h3 class="project-title">
+    <strong>Math Mentor</strong> — <em>Deakin University</em>
+    <img 
+      src="Images/Icons/chalk.svg" 
+      alt="Volunteering & Leadership"
+      title="Volunteering & Leadership Role"
+      class="project-badge"
+      loading="lazy"
+    >
+  </h3>
+  
+  <p>
+    Supported undergraduate students in <strong>Statistics, Linear Algebra, Probability, and introductory Calculus</strong>,
+    with a strong focus on building intuition and explaining complex concepts in clear, simple language.
+  </p>
+  
+  <button class="vol-btn">View Details</button>
+    </div>
+
+  </div>
+
+</section>
+
+<div class="section-divider">
+  <img src="Images/Icons/ac1.svg" class="icon xl up">
+  <img src="Images/Icons/acd1.svg" class="icon sm down">
+  <img src="Images/Icons/acd3.svg" class="icon sm up">
+  <img src="Images/Icons/acd4.svg" class="icon md">
+  <img src="Images/Icons/acd5.svg" class="icon xl tilt">
+  <img src="Images/Icons/acd6.svg" class="icon sm tilt">
+  <img src="Images/Icons/acd7.svg" class="icon sm tilt">
+</div>
+
+<!-- ========================= -->
+<!-- ACADEMICS SECTION         -->
+<!-- ========================= -->
+
+<section class="academics-section scroll-section apple-section" id="academics">
+
+  <h2 class="academics-title reveal-item">Academics & Certifications</h2>
+  <p class="academics-tagline reveal-item">Where I built my analytical and mathematical foundations.</p>
+
+  <div class="academics-grid">
+
+    <!-- Academic Highlights -->
+    <div class="acad-card reveal-item parallax"
+     data-parallax-strength="12"
+     data-modal="acad-highlights-modal">
+
+  <img
+    src="Images/Projects/deakin.jpg"
+    alt="Academic performance and quantitative coursework"
+    class="featured-img"
+  >
+
+  <h3 class="project-title">
+    <strong>Academic Highlights</strong>
+    <img 
+      src="Images/Icons/grad.svg" 
+      alt="Academic Achievement"
+      title="Academic Excellence"
+      class="project-badge"
+      loading="lazy"
+    >
+  </h3>
+
+  <p>
+    Business analytics and Data science-heavy coursework with strong performance
+    across mathematics, data science, machine learning and optimisation-focused units.
+  </p>
+
+  <button class="acad-btn">View Details</button>
+</div>
+
+    <!-- Certifications -->
+    <!-- Certifications -->
+<div class="acad-card reveal-item parallax"
+data-parallax-strength="12"
+data-modal="acad-cert-modal">
+
+<img
+src="Images/Projects/google.png.webp"
+alt="Professional certifications and industry learning"
+class="featured-img"
+>
+
+<h3 class="project-title">
+<strong>Certifications</strong>
+<img 
+ src="Images/Icons/cert.svg" 
+ alt="Professional Certifications"
+ title="Professional Certifications"
+ class="project-badge"
+ loading="lazy"
+>
+</h3>
+
+<p>
+Industry-recognised certifications in data analytics and programming,
+including Google and IBM credentials, with ongoing cloud-focused learning.
+</p>
+
+<button class="acad-btn">View Details</button>
+</div>
+
+    <!-- Research Papers -->
+<div class="acad-card reveal-item parallax"
+data-parallax-strength="12"
+data-modal="acad-papers-modal">
+
+<img
+src="Images/Projects/nd.jpg"
+alt="Research and analytical writing"
+class="featured-img"
+>
+
+<h3 class="project-title">
+<strong>Research & Writing</strong>
+<img 
+ src="Images/Icons/pen.svg" 
+ alt="Research & Publications"
+ title="Research & Publications"
+ class="project-badge"
+ loading="lazy"
+>
+</h3>
+
+<p>
+  Applied research and technical writing across probability,
+  dimensionality reduction, neural networks and analytical explainers.
+</p>
+
+<button class="acad-btn">View Details</button>
+</div>
+
+  </div>
+</section>
+
+<!-- ========================= -->
+<!-- PROJECT MODALS            -->
+<!-- ========================= -->
+
+<!-- ========================= -->
+<!-- Alzheimer PROJECT       -->
+<!-- ========================= -->
+
+
+<div class="modal-overlay" id="alz-overview-modal">
+  <div class="modal">
+    <h2>Alzheimer’s Machine Learning Diagnosis Overview</h2>
+    
+    <div class="modal-cta dashboard-nav">
+      <a href="https://coursera.org/share/38ab73a719a6f7e307f74f51cd015096"
+         target="_blank"
+         class="modal-link">
+        View Certificate
+      </a>
+    
+      <a href="https://github.com/Siddhant0kohli/Alzheimer-project-"
+         target="_blank"
+         class="modal-link">
+        View Project
+      </a>
+    </div>
+
+
+    <!-- IMAGE GOES HERE -->
+    <img
+      src="Images/Projects/alz11.jpg"
+      alt="Alzheimer’s ML project overview"
+      class="modal-hero-img"
+    >
+
+
+    <h2>Context & Objective</h2>
+    <p class="modal-text">
+  This project explores how classical statistical analysis and supervised machine learning
+  can be used to distinguish between Alzheimer’s and non-Alzheimer’s cases using structured
+  clinical data. The focus was not on model complexity, but on understanding the data,
+  its limitations, and the reliability of conclusions drawn from it.
+    </p>
+
+    <p class="modal-text">
+      Rather than treating models as black boxes, the goal was to examine <strong> which signals are present, how stable they are, and under what assumptions they remain valid.</strong> Multiple models were evaluated, with performance judged not only by accuracy, but by interpretability and robustness.
+    </p>
+
+    
+
+    <!-- 👇 ADD THIS EXACT BLOCK HERE -->
+    <div class="modal-nav">
+      <button class="about-toggle secondary" data-modal="alz-stats-modal">
+        Statistical Analysis
+      </button>
+      <button class="about-toggle secondary" data-modal="alz-models-modal">
+        Data Modelling
+      </button>
+      <button class="about-toggle secondary" data-modal="alz-results-modal">
+        Results
+      </button>
+      <button class="about-toggle secondary" data-modal="alz-learnings-modal">
+        Limitations and Learnings
+      </button>
+
+    </div>
+
+    <button class="close-btn">Close</button>
+  </div>
+</div>
+
+<div class="modal-overlay" id="alz-stats-modal">
+  <div class="modal">
+    <h2>Statistical Analysis & EDA</h2>
+
+    <img
+      src="Images/Projects/alz-stats.jpg"
+      alt="Statistical analysis charts"
+      class="modal-hero-img"
+    >
+    <strong>This stage focused on understanding the structure, distribution and limitations of the clinical data before any modelling decisions were made.</strong>
+    <ul>
+      <li>Examining feature distributions, skewness and scale differences across clinical variables.</li>
+      <li>Normality testing using <strong>Shapiro–Wilk</strong> to guide appropriate statistical assumptions.</li>
+      <li>Outlier verification using <strong>Z-score and Tukey (IQR) methods</strong>, distinguishing data errors from genuine clinical variability.</li>
+      <li>Probability-based questions grounded in real clinical interpretation rather than abstract metrics.</li>
+      <li>Inferential testing including <strong>t-tests, chi-square tests and point-biserial correlation</strong> to assess feature relevance.</li>
+    </ul>
+
+    <button class="back-btn" aria-label="Go back">
+      ←
+    </button>
+    <button class="close-btn">Close</button>
+  </div>
+</div>
+
+<div class="modal-overlay" id="alz-models-modal">
+  <div class="modal">
+    <h2>Modelling Approach</h2>
+
+    <img
+    src="Images/Projects/model1.jpg"
+    alt="Statistical analysis charts"
+    class="modal-hero-img"
+  >
+  <strong>Modelling focused on comparing classical, interpretable machine-learning approaches rather
+    than maximising algorithmic complexity, aligning with best practices in medical analytics.</strong>
+
+    <p>
+      The modelling pipeline included:
+    </p>
+  
+    <ul>
+      <li>Feature selection was performed using mutual information combined with statistical relevance
+        checks. Min–Max scaling was applied to support distance-based and margin-based models.</li>
+      <li>
+        Models included Logistic Regression, K-Nearest Neighbours, Decision Trees with controlled
+        depth, and Support Vector Machines using a linear kernel.
+      </li>
+      <li>Train–test splits and k-fold cross-validation were used alongside hyperparameter tuning
+        (GridSearchCV) to control overfitting and evaluate bias–variance trade-offs.</li>
+      <li>
+Models were evaluated using accuracy, confusion matrices, classification reports
+        and ROC–AUC, with emphasis on stability and consistency across folds.</li>
+    </ul>
+  
+      
+    <button class="back-btn" aria-label="Go back">
+      ←
+    </button>
+    <button class="close-btn">Close</button>
+  </div>
+</div>
+
+<div class="modal-overlay" id="alz-results-modal">
+  <div class="modal">
+    <h2>Key Results</h2>
+
+    <img
+    src="Images/Projects/results1.jpg"
+    alt="Statistical analysis charts"
+    class="modal-hero-img"
+  >
+
+
+    <ul>
+      <li>
+        Support Vector Machines performed best overall with 83% accuracy signalling roughly 8 out of 10 patients were classified correctly, While Logistic Regression achieved similar accuracy with the
+        added benefit of being easier to interpret and explain.
+      </li>
+      
+      <li>
+        Decision Trees tended to overfit the data when not carefully controlled, meaning they
+        performed well on training data but were less reliable on new patients. Model behaviour
+        remained consistent with earlier statistical tests and correlation findings.
+      </li>
+      
+      <li>
+        Results were treated as decision-support signals rather than medical diagnoses,
+        ensuring conclusions were cautious, evidence-based, and suitable for supporting
+        (not replacing) clinical judgement.
+      </li>
+      
+      <li>
+        The analysis also answered practical probability-based questions, such as the likelihood
+        that a patient has both depression and diabetes, or the probability that a patient with
+        a family history of Alzheimer’s also has hypertension.
+      </li>
+    
+    </ul>
+    
+    
+
+    <button class="back-btn" aria-label="Go back">
+      ←
+    </button>
+    <button class="close-btn">Close</button>
+  </div>
+</div>
+
+<!-- ========================= -->
+<!-- ALZHEIMER – LEARNINGS -->
+<!-- ========================= -->
+
+<div class="modal-overlay" id="alz-learnings-modal">
+  <div class="modal">
+    <h2>Limitations and Learnings</h2>
+
+    <img
+    src="Images/Projects/limitalz.jpg"
+    alt="Statistical analysis charts"
+    class="modal-hero-img"
+  >
+
+  <strong>Key Limitations</strong>
+      <p>
+        Limitations included reliance on secondary clinical data, limited longitudinal depth,
+        potential self-reporting bias and sensitivity to preprocessing and feature definitions.
+      </p>
+
+       <p>
+      This project reinforced the importance of treating medical prediction tasks as
+      statistical reasoning problems rather than purely optimisation exercises.
+      Model performance alone is insufficient without understanding assumptions,
+      data quality and generalisability. I learned that simpler, well-validated models (such as Logistic Regression and SVM)
+      often outperform more complex alternatives when data is limited or noisy.
+      Interpretability proved as important as accuracy.
+      </p>
+
+    <strong>Core Learnings</strong>
+      <p>
+        Simpler, statistically grounded models often outperform complex alternatives on limited data.
+        Interpretability is as important as accuracy and models should support, not replace clinical judgements.
+      </p>
+    <button class="back-btn" aria-label="Go back">
+      ←
+    </button>
+    <button class="close-btn">Close</button>
+  </div>
+</div>
+
+<!-- ========================= -->
+<!-- ALZHEIMER – END -->
+<!-- ========================= -->
+
+
+
+<!-- ========================= -->
+<!-- CONSULTING – OVERVIEW -->
+<!-- ========================= -->
+
+<div class="modal-overlay" id="consulting-modal">
+  <div class="modal">
+
+    <h2>Saint Ann's School — <em>Expansion Strategy Overview</em></h2>
+
+    <div class="modal-cta dashboard-nav">
+
+      <a href="https://github.com/Siddhant0kohli/Alzheimer-project-"
+         target="_blank"
+         class="modal-link">
+        View Project
+      </a>
+    </div>
+
+    <img
+      src="Images/Projects/saintanns.jpg"
+      alt="Saint Ann’s School expansion analysis overview"
+      class="modal-hero-img"
+    >
+
+    <h2>Context & Objective</h2>
+<p class="modal-text">
+  This consulting project evaluated the feasibility of Saint Ann’s School establishing
+  its first Australian campus. The objective was to identify a location that balances
+  financial capacity, education demand, parental engagement, and cultural alignment
+  with progressive international schooling models.
+</p>
+
+        <p class="modal-text">
+      Rather than ranking suburbs purely by wealth, the analysis focused on
+        <strong>actionable enrolment potential</strong> — combining statistical validation,
+        demographic structure and real-world schooling behaviour.</p>
+    
+
+    <!-- NAV BUTTONS -->
+    <div class="modal-nav">
+      <button class="about-toggle secondary" data-modal="consulting-method-modal">
+        Methodology and Data
+      </button>
+
+      <button class="about-toggle secondary" data-modal="consulting-analysis-modal">
+        Analysis and Findings
+      </button>
+
+      <button class="about-toggle secondary" data-modal="consulting-clustering-modal">
+        Target Clustering
+      </button>
+
+      <button class="about-toggle secondary" data-modal="consulting-conclusion-modal">
+        Final Recommendation
+      </button>
+
+      <button class="about-toggle secondary" data-modal="consulting-risks-modal">
+        Limitations and Learnings
+      </button>
+    </div>
+
+    <!-- CLOSE -->
+    <div class="modal-close-row">
+      <button class="close-btn">Close</button>
+    </div>
+
+  </div>
+</div>
+
+
+<!-- ========================= -->
+<!-- CONSULTING – METHODOLOGY -->
+<!-- ========================= -->
+
+<div class="modal-overlay" id="consulting-method-modal">
+  <div class="modal">
+    <h2>Methodology & Data Sources</h2>
+
+    <img
+      src="Images/Projects/sourcecon.jpg"
+      alt="Suburb clustering and spatial analysis"
+      class="modal-hero-img"
+    >
+
+
+    <strong>Multi-Stage Statistical & Demographic Framework</strong>
+
+    <ul>
+      <li>
+        Data sourced from <strong>ATO</strong> (taxable income, business income, superannuation)
+        and <strong>ABS</strong> (GCP tables G15, G26, G29, G30, G32–G56).
+      </li>
+    
+      <li>
+        Suburb shortlisting using population thresholds and combined wealth metrics
+        to ensure both financial capacity and enrolment scale.
+      </li>
+      
+      <li>
+        Geographic clustering to reflect real school catchment behaviour rather than
+        isolated postcode-level comparisons.
+      </li>
+      
+      <li>
+        Conducted regular client meetings to <strong>clarify objectives, constraints,
+        and success criteria</strong>, ensuring analysis remained aligned with
+        real-world decision needs.
+      </li>
+      
+      <li>
+        Translated qualitative client goals and stakeholder concerns into
+        <strong>clear, testable statistical questions</strong>, guiding data selection,
+        modelling choices, and interpretation.
+      </li>
+    </ul>
+
+    <p class="modal-text">
+      The revised methodology shifted from “richest suburbs” to
+      <strong>statistically defensible enrolment zones</strong>, integrating financial capacity
+      with demographic demand and parental behaviour.
+    </p>
+
+    <button class="back-btn" aria-label="Go back">
+      ←
+    </button>
+    <button class="close-btn">Close</button>
+  </div>
+</div>
+
+
+<!-- ========================= -->
+<!-- CONSULTING – ANALYSIS -->
+<!-- ========================= -->
+
+<div class="modal-overlay" id="consulting-analysis-modal">
+  <div class="modal">
+    <h2>Analysis & Key Findings</h2>
+
+    <img
+      src="Images/Projects/analyticscon.jpg"
+      alt="Suburb clustering and spatial analysis"
+      class="modal-hero-img"
+    >
+
+    <ul>
+      <li>Initial descriptive filtering followed by ANOVA and Tukey post-hoc tests confirmed <strong>NSW and VIC</strong> as statistically wealthier than other states.</li>
+      <li>Pure wealth did not guarantee enrolment viability — several ultra-wealthy suburbs lacked scale.</li>
+      <li>Private school penetration proved a stronger demand signal than income alone.</li>
+      <li>ABS indicators showed strong links between parental education, profession and school choice.</li>
+      <li>Rising non-government enrolments nationally reinforced market readiness.</li>
+    </ul>
+    <p class="modal-text">
+      These findings reframed the problem from identifying affluent areas
+      to isolating <strong>where wealth, scale, and schooling behaviour intersect</strong>.
+    </p>
+
+    <button class="back-btn" aria-label="Go back">
+      ←
+    </button>
+    <button class="close-btn">Close</button>
+  </div>
+</div>
+
+<!-- ========================= -->
+<!-- CONSULTING – Target  -->
+<!-- ========================= -->
+
+<div class="modal-overlay" id="consulting-clustering-modal">
+  <div class="modal">
+    <h2>Target Clustering</h2>
+
+    <!-- Optional image (Google Maps / GIS screenshot) -->
+    <img
+      src="Images/Projects/tcbi.jpg"
+      alt="Final shortlisted suburbs and spatial clusters"
+      class="modal-hero-img"
+    >
+
+    <ul>
+      <li><strong>Northern Sydney:</strong> Family-engaged, multicultural, strong unpaid childcare signals.</li>
+      <li><strong>Eastern Sydney:</strong> Prestige-driven, exceptionally high private school uptake.</li>
+      <li><strong>Melbourne Toorak:</strong> Ultra-wealthy but limited student volume.</li>
+      <li>Cluster formation avoided isolated postcode bias.</li>
+      <li>Education demand, transport accessibility, and professional density validated.</li>
+    </ul>
+    <p class="modal-text">
+      Sydney emerged with <strong>two scalable, distinct demand clusters</strong>,
+      while Melbourne’s wealth failed to translate into sustainable enrolment scale.
+    </p>
+
+    <button class="back-btn" aria-label="Go back">
+      ←
+    </button>
+    <button class="close-btn">Close</button>
+  </div>
+</div>
+
+<div class="modal-overlay" id="consulting-conclusion-modal">
+  <div class="modal">
+    <h2>Final Recommendation</h2>
+
+    <!-- Optional image (Google Maps / GIS screenshot) -->
+    <img
+      src="Images/Projects/recom.png"
+      alt="Final shortlisted suburbs and spatial clusters"
+      class="modal-hero-img"
+    >
+
+    <strong>Recommended Entry Location: Eastern Sydney</strong>
+
+    <ul>
+      <li>~14,300 students aged 5–17 with exceptionally high private school penetration.</li>
+      <li>Private enrolment rates up to <strong>82%</strong> in key suburbs.</li>
+      <li>Strong professional density (law, finance, medicine).</li>
+      <li>Globally oriented parent base aligned with international education models.</li>
+      <li>Lower adoption risk relative to other clusters.</li>
+    </ul>
+
+    <p class="modal-text">
+      Eastern Sydney offers the strongest balance of
+      <strong>prestige, scale, willingness-to-pay, and cultural alignment</strong>,
+      making it the optimal launch location for Saint Ann’s.
+    </p>
+
+    <button class="back-btn" aria-label="Go back">
+      ←
+    </button>
+    <button class="close-btn">Close</button>
+  </div>
+</div>
+
+<!-- ========================= -->
+<!-- CONSULTING – RISKS & LIMITATIONS -->
+<!-- ========================= -->
+<div class="modal-overlay" id="consulting-risks-modal">
+  <div class="modal">
+    <h2>Limitations and Learnings</h2>
+
+    <img
+      src="Images/Projects/riskcon.jpg"
+      alt="Final shortlisted suburbs and spatial clusters"
+      class="modal-hero-img"
+    >
+
+    <strong>Key Limitations</strong>
+    <p>
+      The analysis relied on publicly available ATO and ABS datasets, which aggregate income
+      and demographic indicators at suburb and regional levels. As a result, the model may
+      under-represent private wealth concentration, intergenerational assets, and short-term
+      migration or policy-driven demand shifts. The findings therefore describe
+      <em>structural enrolment potential</em> rather than guaranteed demand, and are best
+      interpreted as a shortlisting and prioritisation framework rather than a final
+      site-selection decision.
+    </p>
+
+    <strong>Core Learnings</strong>
+    <p>
+      This project reinforced that wealth alone is an insufficient decision variable in
+      education expansion. High income does not automatically translate into enrolment
+      intent, scale, or long-term sustainability. More reliable signals emerged from the
+      interaction between <strong>demographic structure, parental behaviour, education
+      preferences, and cultural norms</strong>, particularly where these factors aligned
+      spatially.
+    </p>
+
+    <button class="back-btn" aria-label="Go back">
+      ←
+    </button>
+    <button class="close-btn">Close</button>
+  </div>
+</div>
+
+<!-- ========================= -->
+<!-- SQL-->
+<!-- ========================= -->
+
+<!-- ========================= -->
+<!-- SQL – OVERVIEW -->
+<!-- ========================= -->
+
+<div class="modal-overlay" id="sql-modal">
+  <div class="modal">
+
+    <h2>HR Analytics & Compensation Insights</h2>
+
+    <div class="modal-cta">
+      <a
+        href="https://github.com/Siddhant0kohli/Sql-project"
+        target="_blank"
+        class="modal-link">
+        View Project
+      </a>
+    </div>
+
+    <img
+      src="Images/Projects/sql-hr.jpg"
+      alt="HR analytics using SQL"
+      class="modal-hero-img"
+    >
+
+    <h2>Context & Objective</h2>
+<p class="modal-text">
+  This project applied <strong>relational SQL</strong> analytics to examine workforce structure,
+  compensation patterns, and equity risks within a multi-department organisation.
+  The objective was to transform raw transactional HR data into actionable insights
+  for HR and leadership decision-making.
+</p>
+
+    <p class="modal-text">
+      Rather than producing surface-level summaries, the analysis focused on
+      <strong>pay distribution, tenure effects, managerial compensation, and structural outliers</strong>,
+      using SQL as an analytical tool rather than a data extraction utility.
+    </p>
+
+    <!-- NAV -->
+    <div class="modal-nav">
+      <button class="about-toggle secondary" data-modal="hr-methodology-modal">
+        Methodology and Data
+      </button>
+
+      <button class="about-toggle secondary" data-modal="sql-analysis-modal">
+        Analysis and Insights
+      </button>
+
+      <button class="about-toggle secondary" data-modal="hr-sql-techniques-modal">
+        SQL Techniques
+      </button>
+
+      <button class="about-toggle secondary" data-modal="sql-risks-modal">
+        Limitations
+      </button>
+    </div>
+
+    <button class="close-btn">Close</button>
+  </div>
+</div>
+
+
+
+<!-- ========================= -->
+<!-- SQL – METHODOLOGY -->
+<!-- ========================= -->
+
+<div class="modal-overlay" id="hr-methodology-modal">
+  <div class="modal">
+    <h2>Methodology & Data</h2>
+
+    <img
+      src="Images/Projects/methodsql.jpg"
+      alt="Relational database schema and HR data model"
+      class="modal-hero-img"
+    >
+
+    <ul>
+      <li>Worked with a <strong>multi-table relational HR database</strong> including employees, salaries, departments, job titles, and managers.</li>
+      <li>Created <strong>staging tables</strong> to preserve raw data integrity and enable safe transformations.</li>
+      <li>Performed systematic data cleaning: duplicate detection, trimming text fields, and validating null constraints.</li>
+      <li>Engineered analytical fields such as <strong>age, tenure, experience duration, and salary periods</strong>.</li>
+      <li>Used joins to construct consolidated analytical views across workforce, compensation, and hierarchy dimensions.</li>
+    </ul>
+
+    <p class="modal-text">
+      The methodology prioritised <strong>reproducibility, traceability, and analytical correctness</strong>,
+      ensuring that all insights could be audited back to their source tables.
+    </p>
+
+    <button class="back-btn">←</button>
+    <button class="close-btn">Close</button>
+  </div>
+</div>
+
+<!-- ========================= -->
+<!-- SQL – ANALYSIS -->
+<!-- ========================= -->
+
+<div class="modal-overlay" id="sql-analysis-modal">
+  <div class="modal">
+    <h2>Key Analysis & Insights</h2>
+
+    <img
+      src="Images/Projects/hranalytic.jpg"
+      alt="HR analytics insights"
+      class="modal-hero-img"
+    >
+
+    <ul>
+      <li>Identified long-term hiring patterns and periods of workforce expansion and contraction.</li>
+      <li>Analysed salary distributions across <strong>gender, age, tenure, and department</strong>.</li>
+      <li>Detected departments with disproportionate salary outliers, particularly sales-heavy units.</li>
+      <li>Demonstrated a clear relationship between <strong>experience, tenure, and compensation growth</strong>.</li>
+      <li>Ranked job titles and managers by average and peak compensation.</li>
+      <li>Flagged potential <strong>equity and pay-structure risks</strong> requiring further HR review.</li>
+    </ul>
+
+    <p class="modal-text">
+      Results were framed as <strong>decision-support indicators</strong>,
+      highlighting areas for investigation rather than prescribing automated actions.
+    </p>
+
+    <button class="back-btn">←</button>
+    <button class="close-btn">Close</button>
+  </div>
+</div>
+
+<!-- ========================= -->
+<!-- SQL – TECHNIQUES -->
+<!-- ========================= -->
+
+<div class="modal-overlay" id="hr-sql-techniques-modal">
+  <div class="modal">
+    <h2>SQL Techniques & Tools</h2>
+
+    <img
+      src="Images/Projects/sqlcode.jpg"
+      alt="SQL queries and analytical functions"
+      class="modal-hero-img"
+    >
+
+    <ul>
+      <li>Advanced joins (INNER, LEFT) to integrate employee, salary, and department tables.</li>
+      <li>Window functions such as <strong>ROW_NUMBER() OVER (PARTITION BY)</strong> for deduplication and trend analysis.</li>
+      <li>CTEs to structure complex queries into readable analytical blocks.</li>
+      <li>Aggregate functions (AVG, SUM, COUNT, STD) for compensation metrics.</li>
+      <li>Outlier detection using <strong>z-scores</strong> on salary distributions.</li>
+      <li>Temporal analysis using date extraction for hiring and compensation trends.</li>
+    </ul>
+
+    <p class="modal-text">
+      This project combined <strong>basic, intermediate, and advanced SQL</strong>
+      to move beyond querying into structured analytical reasoning.
+    </p>
+
+    <button class="back-btn">←</button>
+    <button class="close-btn">Close</button>
+  </div>
+</div>
+
+<!-- ========================= -->
+<!-- SQL – RISKS -->
+<!-- ========================= -->
+
+<div class="modal-overlay" id="sql-risks-modal">
+  <div class="modal">
+    <h2>Key Limitations</h2>
+
+    <img
+      src="Images/Projects/assumptionsql.jpg"
+      alt="SQL analysis assumptions"
+      class="modal-hero-img"
+    >
+
+    <ul>
+      <li>Analysis relied on historical transactional data rather than performance or productivity metrics.</li>
+      <li>Salary outliers may reflect role-specific incentives, commissions, or contract structures.</li>
+      <li>Gender-based comparisons do not fully control for role seniority or responsibility.</li>
+      <li>Findings are designed to <strong>support investigation</strong>, not automate HR decisions.</li>
+    </ul>
+
+    <p class="modal-text">
+      The project reinforces the importance of combining quantitative analysis
+      with contextual and policy-aware interpretation in HR analytics.
+    </p>
+
+    <button class="back-btn">←</button>
+    <button class="close-btn">Close</button>
+  </div>
+</div>
+
+<!-- ========================= -->
+<!-- POWER BI – OVERVIEW -->
+<!-- ========================= -->
+
+<div class="modal-overlay" id="bi-modal">
+  <div class="modal">
+
+    <h2>Retail Business Intelligence</h2>
+
+    <div class="modal-cta">
+      <a
+        href="https://github.com/Siddhant0kohli/Power-BI-development-analysis/tree/main"
+        target="_blank"
+        class="modal-link">
+        View Project
+      </a>
+    </div>
+
+
+    <img
+      src="Images/Projects/bicover1.jpg"
+      alt="Retail business intelligence dashboards"
+      class="modal-hero-img"
+    >
+
+    <h2>Context & Objective</h2>
+<p class="modal-text">
+  This project developed an end-to-end Business Intelligence solution for a US-based
+  retail organisation (Superstores), transforming transactional sales and customer data
+  into managerial dashboards to support strategic and operational decision-making.
+</p>
+
+    <p class="modal-text">
+      The objective was not exploratory visualisation alone, but to
+      <strong>clean, validate, analyse, and communicate business signals</strong>
+      relating to sales performance, profitability, customer behaviour, and regional variation
+      using <em>Excel and Power BI</em> as complementary analytical tools.
+    </p>
+
+    <div class="modal-nav">
+      <button class="about-toggle secondary" data-modal="bi-methodology-modal">
+        Methodology and Data
+      </button>
+      <button class="about-toggle secondary" data-modal="bi-analysis-modal">
+        Analysis and Insights
+      </button>
+      <button class="about-toggle secondary" data-modal="bi-dashboards-modal">
+        Dashboards
+      </button>
+      <button class="about-toggle secondary" data-modal="bi-recommendations-modal">
+        Recommendations
+      </button>
+      <button class="about-toggle secondary" data-modal="bi-risks-modal">
+        Limitations and Learnings
+      </button>
+    </div>
+
+    <button class="close-btn">Close</button>
+  </div>
+</div>
+
+<!-- ========================= -->
+<!-- POWER BI – METHODOLOGY -->
+<!-- ========================= -->
+
+<!-- ========================= -->
+<!-- POWER BI – METHODOLOGY -->
+<!-- ========================= -->
+
+<div class="modal-overlay" id="bi-methodology-modal">
+  <div class="modal">
+    <h2>Methodology & Data Preparation</h2>
+
+    <img
+      src="Images/Projects/cleaningxl.jpg"
+      alt="Data cleansing and preparation workflow"
+      class="modal-hero-img"
+    >
+
+    <ul>
+      <li>Initial data cleansing and standardisation performed in <strong>Microsoft Excel</strong> prior to BI ingestion.</li>
+      <li>Removed hidden rows, empty columns, and fully duplicated records to preserve data integrity.</li>
+      <li>Separated composite fields (e.g. city and postal code) for improved analytical structure.</li>
+      <li>Standardised currencies, date formats, and categorical variables.</li>
+      <li>Excluded undefined or incomplete fields (e.g. base margin) to avoid misinterpretation.</li>
+    </ul>
+
+    <p class="modal-text">
+      This preprocessing phase ensured the dataset was
+      <strong>analysis-ready, auditable, and consistent</strong> before being loaded
+      into Power BI for dashboard development.
+    </p>
+
+    <button class="back-btn">←</button>
+    <button class="close-btn">Close</button>
+  </div>
+</div>
+<!-- ========================= -->
+<!-- POWER BI – ANALYSIS -->
+<!-- ========================= -->
+
+<div class="modal-overlay" id="bi-analysis-modal">
+  <div class="modal">
+    <h2>Exploratory & Analytical Insights</h2>
+
+    <img
+      src="Images/Projects/explore.jpg"
+      alt="Retail analytics and trend analysis"
+      class="modal-hero-img"
+    >
+
+    <ul>
+      <li>Product-level analysis distinguished <strong>high-revenue</strong> versus <strong>high-volume</strong> categories.</li>
+      <li>Regional profitability varied significantly, with Eastern and Western states outperforming others.</li>
+      <li>Office supplies dominated volume, while technology products drove higher margins.</li>
+      <li>Weak aggregate correlation between quantity ordered and sales highlighted the role of price and discounts.</li>
+      <li>Seasonal trends revealed volatility in early months and stronger profit stability later in the period.</li>
+    </ul>
+
+    <p class="modal-text">
+      Analysis emphasised that
+      <strong>aggregate metrics can mask structural differences</strong>,
+      reinforcing the need for category-level and regional segmentation.
+    </p>
+
+    <button class="back-btn">←</button>
+    <button class="close-btn">Close</button>
+  </div>
+</div>
+
+<!-- ========================= -->
+<!-- POWER BI – DASHBOARDS -->
+<!-- ========================= -->
+
+<div class="modal-overlay" id="bi-dashboards-modal">
+  <div class="modal">
+    <h2>Power BI Dashboards</h2>
+
+    <img
+      src="Images/Projects/dass.jpg"
+      alt="Power BI executive dashboards"
+      class="modal-hero-img"
+    >
+
+    <p class="modal-text">
+      Two role-specific dashboards were developed to support
+      <strong>different managerial decision contexts</strong>.
+    </p>
+
+    <div class="modal-nav dashboard-nav">
+      <button class="dashboard-tab" data-modal="bi-manager-modal">
+        Sales Manager Dashboard
+      </button>
+      <button class="dashboard-tab" data-modal="bi-financial-modal">
+        Regional Manager Dashboard
+      </button>
+    </div>
+
+    <button class="back-btn">←</button>
+    <button class="close-btn">Close</button>
+  </div>
+</div>
+<div class="modal-overlay" id="bi-manager-modal">
+  <div class="modal">
+    <h2>Dashboard · Sales Manager</h2>
+
+    <img
+      src="Images/Projects/salesdas.jpg"
+      alt="Sales manager Power BI dashboard"
+      class="modal-hero-img"
+    >
+
+    <ul>
+      <li>Average sales and profit by product category and sub-category.</li>
+      <li>Shipping mode profitability and operational efficiency.</li>
+      <li>Identification of loss-making products and delivery combinations.</li>
+      <li>Supports tactical pricing, promotion, and inventory decisions.</li>
+    </ul>
+
+    <button class="back-btn">←</button>
+    <button class="close-btn">Close</button>
+  </div>
+</div>
+
+
+
+<!-- ========================= -->
+<!-- POWER BI – RECOMMENDATIONS -->
+<!-- ========================= -->
+
+<div class="modal-overlay" id="bi-financial-modal">
+  <div class="modal">
+    <h2>Dashboard · Regional Manager</h2>
+
+    <img
+      src="Images/Projects/regiondas.jpg"
+      alt="Regional manager Power BI dashboard"
+      class="modal-hero-img"
+    >
+
+    <ul>
+      <li>State-level profitability visualised through interactive bubble maps.</li>
+      <li>Region-by-region breakdown of profit, quantity, and average unit price.</li>
+      <li>Identification of profitable regions masking underperforming categories.</li>
+      <li>Supports geographic resource allocation and regional strategy.</li>
+    </ul>
+
+    <button class="back-btn">←</button>
+    <button class="close-btn">Close</button>
+  </div>
+</div>
+
+<!-- ========================= -->
+<!-- POWER BI – RECOMMENDATIONS -->
+<!-- ========================= -->
+
+<div class="modal-overlay" id="bi-recommendations-modal">
+  <div class="modal">
+    <h2>Business Recommendations</h2>
+
+    <img
+      src="Images/Projects/rec.jpg"
+      alt="BI-driven recommendations"
+      class="modal-hero-img"
+    >
+
+    <ul>
+      <li>Adopt personalised marketing strategies in consistently loss-making states.</li>
+      <li>Optimise shipping modes to align logistics cost with product margins.</li>
+      <li>Prioritise high-margin products and reduce inventory exposure to unprofitable lines.</li>
+      <li>Use dashboards as <strong>ongoing monitoring tools</strong>, not one-off reports.</li>
+    </ul>
+
+    <button class="back-btn">←</button>
+    <button class="close-btn">Close</button>
+  </div>
+</div>
+
+<!-- ========================= -->
+<!-- POWER BI – LEARNINGS -->
+<!-- ========================= -->
+
+<div class="modal-overlay" id="bi-risks-modal">
+  <div class="modal">
+    <h2>Limitations and Learnings</h2>
+
+    <img
+      src="Images/Projects/learnbi.jpg"
+      alt="Business intelligence limitations and insights"
+      class="modal-hero-img"
+    >
+
+    <strong>Key Limitations</strong>
+    <p>
+      The analysis relied on historical transactional sales data which limits the ability
+      to infer causality or predict future behaviour. External drivers such as promotions,
+      market competition, customer sentiment and supply-chain constraints were not captured
+      in the dataset and may partially explain observed profit or volume patterns. Dashboard abstractions necessarily simplify complex relationships. While high-level
+      KPIs improve interpretability, they can mask granular drivers unless users actively
+      explore drill-down views. As such, the dashboards are designed to guide investigation,
+      not replace deeper analysis.
+    </p>
+
+    <strong>Core Learnings</strong>
+    <p>
+      This project reinforced that effective Business Intelligence is not about visual density,
+      but about <strong>analytical intent and narrative clarity</strong>. Clean data modelling,
+      thoughtful metric selection, and contextual interpretation matter more than sophisticated visuals. I learned that dashboards are most valuable when framed as
+      <strong>decision-support tools</strong> — highlighting risks, trade-offs and performance
+      signals rather than definitive answers. Managerial judgement and domain knowledge remain
+      essential to translating BI insights into action.
+    </p>
+
+
+    <button class="back-btn" aria-label="Go back">
+      ←
+    </button>
+    <button class="close-btn">Close</button>
+  </div>
+</div>
+
+<!-- ========================= -->
+<!-- LP Modals -->
+<!-- ========================= -->
+
+<!-- ========================= -->
+<!-- LP – OVERVIEW -->
+<!-- ========================= -->
+
+<div class="modal-overlay" id="portfolio-modal">
+  <div class="modal">
+    <h2>Portfolio Optimisation — Overview</h2>
+
+    <div class="modal-cta dashboard-nav">
+      <a
+        href="https://github.com/Siddhant0kohli/Portfolio-optimisation-"
+        target="_blank"
+        class="modal-link">
+        View Project
+      </a>
+    </div>
+
+    <img
+      src="Images/Projects/wslp.jpg"
+      alt="Risk–return trade-off visualisation"
+      class="modal-hero-img"
+    >
+
+    <h2>Context & Objective</h2>
+<p class="modal-text">
+  This project applied linear, integer, and non-linear optimisation models to construct
+  an investment portfolio across multiple sectors, balancing return, risk, diversification,
+  and practical investment constraints.
+</p>
+
+    <p class="modal-text">
+      Rather than maximising returns in isolation, the analysis treated portfolio
+      construction as a <strong>constraint-driven decision problem</strong>,
+      explicitly modelling sector exposure, risk categories, and capital allocation
+      rules to reflect realistic investment behaviour.
+    </p>
+
+    <div class="modal-nav">
+      <button class="about-toggle secondary" data-modal="lp-method-modal">
+        Methodology
+      </button>
+      <button class="about-toggle secondary" data-modal="lp-results-modal">
+        Optimisation and Results
+      </button>
+      <button class="about-toggle secondary" data-modal="lp-limit-modal">
+        Limitations and Learnings
+      </button>
+    </div>
+
+    <button class="close-btn">Close</button>
+  </div>
+</div>
+
+<!-- ========================= -->
+<!-- LP – METHODOLOGY -->
+<!-- ========================= -->
+
+<div class="modal-overlay" id="lp-method-modal">
+  <div class="modal">
+    <h2>Methodology & Model Design</h2>
+
+    <img
+      src="Images/Projects/lpmeth3.jpeg"
+      alt="Linear programming portfolio structure"
+      class="modal-hero-img"
+    >
+
+    <ul>
+      <li>Selected <strong>10 Australian stocks</strong> across five sectors: Basic Materials, Healthcare, Financials, Technology, and Industrials.</li>
+      <li>Monthly price data (Feb 2021 – Feb 2024) used to compute <strong>average returns and volatility</strong>.</li>
+      <li>Stocks classified into <strong>four risk categories (R1–R4)</strong> based on standard deviation of returns.</li>
+      <li>Decision variables defined as <strong>portfolio weights</strong> for each stock.</li>
+      <li>Constraints enforced sector exposure, risk balance, and full capital allocation.</li>
+      <li>Optimisation implemented using <strong>Excel Solver</strong> for LP, ILP, and NLP formulations.</li>
+    </ul>
+
+    <p class="modal-text">
+      The modelling framework prioritised <strong>mathematical transparency and interpretability</strong>,
+      allowing each constraint and allocation decision to be directly traced to
+      an investment rationale.
+    </p>
+
+    <button class="back-btn">←</button>
+    <button class="close-btn">Close</button>
+  </div>
+</div>
+
+<!-- ========================= -->
+<!-- LP – RESULTS -->
+<!-- ========================= -->
+
+<div class="modal-overlay" id="lp-results-modal">
+  <div class="modal">
+    <h2>Optimisation & Key Results</h2>
+
+    <img
+      src="Images/Projects/portfolio_results_2.jpg"
+      alt="Optimised portfolio allocation"
+      class="modal-hero-img"
+    >
+
+    <ul>
+      <li><strong>Linear Programming (LP):</strong> Maximised average portfolio return under sector and risk constraints, producing a diversified allocation anchored by Technology One, BHP, CSL, and Transurban.</li>
+      <li><strong>Integer Linear Programming (ILP):</strong> Selected exactly eight stocks with equal weighting, achieving the <strong>highest average return (~8.82%)</strong> while satisfying category and risk constraints.</li>
+      <li><strong>Non-Linear Programming (Risk-Bound):</strong> Maximised return subject to a 4% portfolio risk cap, revealing diminishing returns at higher risk tolerance.</li>
+      <li><strong>Non-Linear Programming (Return-Bound):</strong> Minimized risk while enforcing a minimum 1.5% return, identifying an efficient moderate-risk portfolio.</li>
+      <li><strong>Sharpe Ratio Optimisation:</strong> Highlighted sensitivity to the assumed risk-free rate, producing a negative Sharpe under historical conditions.</li>
+    </ul>
+
+    <p class="modal-text">
+      Across models, results demonstrated that <strong>constraint design materially shapes portfolio behaviour</strong>.
+      Higher nominal returns often emerged from tighter structural rules rather than unconstrained optimisation.
+    </p>
+
+    <button class="back-btn">←</button>
+    <button class="close-btn">Close</button>
+  </div>
+</div>
+</div>
+
+<!-- ========================= -->
+<!-- LP – LIMITATIONS -->
+<!-- ========================= -->
+
+<div class="modal-overlay" id="lp-limit-modal">
+  <div class="modal">
+    <h2>Limitations and Learnings</h2>
+
+    <img
+      src="Images/Projects/blocklp.jpg"
+      alt="Portfolio optimisation limitations"
+      class="modal-hero-img"
+    >
+
+    <strong>Key Limitations</strong>
+    <p>
+      The optimisation models relied on historical return and volatility estimates,
+      which may not persist under changing market conditions. Transaction costs,
+      liquidity constraints, and dynamic correlations were excluded, and linear
+      formulations cannot fully capture non-linear market behaviour or regime shifts.
+    </p>
+
+    <p>
+      Sharpe ratio outcomes were highly sensitive to the assumed risk-free rate,
+      illustrating how small modelling assumptions can materially alter conclusions.
+    </p>
+
+    <strong>Core Learnings</strong>
+    <p>
+      This project reinforced that portfolio optimisation is a
+      <strong>decision-support exercise rather than a forecasting tool</strong>.
+      The true value lies in understanding trade-offs between risk, return,
+      diversification, and constraint design — not in identifying a single “optimal”
+      allocation. Well-structured constraints often produced more realistic and robust portfolios
+      than unconstrained maximisation, highlighting the importance of aligning
+      mathematical models with real investment logic.
+    </p>
+    <button class="back-btn">←</button>
+    <button class="close-btn">Close</button>
+  </div>
+</div>
+
+
+<!-- ========================= -->
+<!-- NLP PROJECT – OVERVIEW -->
+<!-- ========================= -->
+
+<div class="modal-overlay" id="nlp-modal">
+  <div class="modal">
+    <h2>NLP Topic Modelling Overview</h2>
+
+    <div class="modal-cta dashboard-nav">
+      <a
+        href="https://github.com/Siddhant0kohli/Topic-modelling/tree/main"
+        target="_blank"
+        class="modal-link">
+        View Project
+      </a>
+    </div>
+
+    <img
+      src="Images/Projects/nlpcover1.jpg"
+      alt="NLP topic modelling overview"
+      class="modal-hero-img"
+    >
+
+    <h2>Context & Objective</h2>
+<p class="modal-text">
+  This project examined whether unsupervised NLP techniques can uncover meaningful,
+  stable themes within large-scale social media data. Using Twitter discussions around
+  ChatGPT, the objective was to evaluate topic modelling as a statistical reasoning tool.
+</p>
+
+    <p class="modal-text">
+      Rather than treating topic models as black boxes, the analysis focused on
+      <strong>data quality, modelling assumptions, topic stability, and interpretability</strong>.
+      Both sentiment analysis and topic modelling were used to understand
+      how users discuss AI, education, business, and technology.
+    </p>
+
+    <div class="modal-nav">
+      <button class="about-toggle secondary" data-modal="nlp-data-modal">
+        Data and Pre-processing
+      </button>
+      <button class="about-toggle secondary" data-modal="nlp-eda-modal">
+        Exploratory Data Analysis
+      </button>
+      <button class="about-toggle secondary" data-modal="nlp-model-modal">
+        Topic Modelling
+      </button>
+      <button class="about-toggle secondary" data-modal="nlp-results-modal">
+        Results
+      </button>
+      <button class="about-toggle secondary" data-modal="nlp-learnings-modal">
+        Limitations and Learnings
+      </button>
+    </div>
+
+    <button class="close-btn">Close</button>
+  </div>
+</div>
+
+<!-- ========================= -->
+<!-- NLP – DATA & PREPROCESSING -->
+<!-- ========================= -->
+
+<div class="modal-overlay" id="nlp-data-modal">
+  <div class="modal">
+    <h2>Data Collection & Pre-processing</h2>
+
+    <img
+      src="Images/Projects/prepnlp.jpg"
+      alt="NLP preprocessing pipeline"
+      class="modal-hero-img"
+    >
+
+    <strong>This stage focused on preparing noisy social media text for reliable NLP analysis.</strong>
+
+    <ul>
+      <li>Twitter dataset containing multilingual tweets related to ChatGPT and AI.</li>
+      <li>Filtered to English-language tweets for sentiment and topic modelling.</li>
+      <li>Removed URLs, emojis, punctuation, HTML artefacts, and non-textual noise.</li>
+      <li>Lowercasing, tokenisation, stopword removal, and text normalisation.</li>
+      <li>Noun-based filtering and term-frequency thresholds to reduce sparsity.</li>
+    </ul>
+
+    <button class="back-btn">←</button>
+    <button class="close-btn">Close</button>
+  </div>
+</div>
+
+<!-- ========================= -->
+<!-- NLP – EXPLORATORY ANALYSIS -->
+<!-- ========================= -->
+
+<div class="modal-overlay" id="nlp-eda-modal">
+  <div class="modal">
+    <h2>Exploratory Text Analysis</h2>
+
+    <img
+      src="Images/Projects/ss21.jpg"
+      alt="Exploratory NLP analysis"
+      class="modal-hero-img"
+    >
+
+    <ul>
+      <li>Language distribution analysis revealed English as the dominant medium.</li>
+      <li>Tweet volume peaked sharply around major ChatGPT news events.</li>
+      <li>Hashtag frequency analysis highlighted strong AI, OpenAI, Microsoft and education themes.</li>
+      <li>Identification of highly active users and most retweeted posts.</li>
+      <li>Initial signals of thematic clustering prior to formal modelling.</li>
+    </ul>
+
+    <button class="back-btn">←</button>
+    <button class="close-btn">Close</button>
+  </div>
+</div>
+
+<!-- ========================= -->
+<!-- NLP – TOPIC MODELLING -->
+<!-- ========================= -->
+
+<div class="modal-overlay" id="nlp-model-modal">
+  <div class="modal">
+    <h2>Topic Modelling Approach</h2>
+
+    <img
+      src="Images/Projects/sstm.jpg"
+      alt="LDA topic modelling"
+      class="modal-hero-img"
+    >
+
+    <strong>
+      Topic modelling was treated as a probabilistic statistical exercise rather than a purely NLP task.
+    </strong>
+
+    <ul>
+      <li>Latent Dirichlet Allocation (LDA) used for unsupervised topic discovery.</li>
+      <li>Bag-of-words representation with controlled vocabulary size.</li>
+      <li>Iterative experimentation with topic counts.</li>
+      <li>Coherence score (cv) used to select the optimal number of topics.</li>
+      <li><strong>Seven topics</strong> chosen as the best balance between coherence and interpretability.</li>
+    </ul>
+
+    <button class="back-btn">←</button>
+    <button class="close-btn">Close</button>
+  </div>
+</div>
+
+<!-- ========================= -->
+<!-- NLP – RESULTS -->
+<!-- ========================= -->
+
+<div class="modal-overlay" id="nlp-results-modal">
+  <div class="modal">
+    <h2>Key Results</h2>
+
+    <img
+      src="Images/Projects/coh.jpg"
+      alt="Topic coherence and results"
+      class="modal-hero-img"
+    >
+
+    <ul>
+      <li>Distinct themes emerged around <strong>education, business use, coding, employment, and AI ethics</strong>.</li>
+      <li>Highest-probability topics reflected debates on ChatGPT passing professional exams.</li>
+      <li>Sentiment analysis showed OpenAI receiving the strongest positive sentiment.</li>
+      <li>Topics were probabilistic distributions rather than hard classifications.</li>
+      <li>Results aligned closely with real-world discourse around AI adoption and disruption.</li>
+    </ul>
+
+    <button class="back-btn">←</button>
+    <button class="close-btn">Close</button>
+  </div>
+</div>
+
+<!-- ========================= -->
+<!-- NLP – LIMITATIONS & LEARNINGS -->
+<!-- ========================= -->
+
+<div class="modal-overlay" id="nlp-learnings-modal">
+  <div class="modal">
+    <h2>Limitations and Learnings</h2>
+
+    <img
+      src="Images/Projects/limitnlp.jpg"
+      alt="NLP limitations"
+      class="modal-hero-img"
+    >
+
+    <strong>Key Limitations</strong>
+    <p>
+      Topic modelling results are highly sensitive to preprocessing choices,
+      vocabulary selection, and modelling assumptions.
+      LDA’s bag-of-words framework ignores word order and contextual semantics,
+      which limits its ability to capture nuance in short social media texts.
+      Topics should therefore be interpreted as <em>statistical patterns</em>,
+      not definitive labels.
+    </p>
+
+    <strong>Core Learnings</strong>
+    <p>
+      This project reinforced that NLP models are tools for exploration and sense-making,
+      not sources of absolute truth.
+      Careful preprocessing, coherence-driven validation, and domain interpretation
+      are essential for meaningful results.
+      Statistical reasoning and human judgement remain central to interpreting
+      unsupervised NLP outputs.
+    </p>
+
+    <button class="back-btn">←</button>
+    <button class="close-btn">Close</button>
+  </div>
+</div>
+
+
+
+
+<!-- 🔹 ADD ABOUT MODALS HERE 🔹 -->
+
+<div class="modal-overlay" id="how-i-work-modal">
+  <div class="apple-modal">
+
+    <h2>How I Work</h2>
+
+    <div class="apple-list">
+
+      <div class="apple-item">
+        <img src="Images/Icons/note-pencil.svg" class="apple-icon" alt="">
+        <div>
+          <strong>Start with the real problem (not the tool)</strong>
+          <span>
+            I begin by clarifying the decision at hand, what decision needs to be made, what “success”
+            looks like and brainstorming what data science techniques are the right solution.
+          </span>
+        </div>
+      </div>
+
+      <div class="apple-item">
+        <img src="Images/Icons/database.svg" class="apple-icon" alt="">
+        <div>
+          <strong>Map the data landscape</strong>
+          <span>
+            I identify what data exists, what’s missing, where it lives and how reliable it is. I pay close attention to definitions, what a metric actually represents and most importantly, what is something that data cannot tell us.
+          </span>
+        </div>
+      </div>
+
+      <div class="apple-item">
+        <img src="Images/Icons/gear.svg" class="apple-icon" alt="">
+        <div>
+          <strong>Choose the simplest technique that works and keep it scalable</strong>
+          <span>
+            I avoid unnecessary complexity. I choose approaches that are feasible to run, explain, maintain and update. I share progress early and often so stakeholders can challenge assumptions, guide direction and stay aligned with the work as it evolves.
+          </span>
+        </div>
+      </div>
+
+      <div class="apple-item">
+        <img src="Images/Icons/target.svg" class="apple-icon" alt="">
+        <div>
+          <strong>Deliver options, not just outputs</strong>
+          <span>
+            Rather than a single answer, I present a small set of defensible paths with clear trade-offs. This allows stakeholders to choose based on risk, cost and impact and informs what should be measured next.
+          </span>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="apple-modal-footer">
+      <button class="close-btn">Close</button>
+    </div>
+
+  </div>
+</div>
+
+<div class="modal-overlay" id="what-i-dont-do-modal">
+  <div class="modal modal-apple">
+
+    <h2 class="modal-title">What I Don’t Do</h2>
+
+    <div class="apple-steps">
+
+      <div class="apple-step">
+        <img src="Images/Icons/hammer.svg" class="apple-icon" alt="">
+        <div>
+          <strong>Use data science where it doesn’t belong</strong>
+          <p>
+            I don’t believe in forcing models onto problems that are better solved with domain knowledge,
+            clear logic or simple statistical analysis. If data science isn’t the right tool, I convey so early.
+          </p>
+        </div>
+      </div>
+
+      <div class="apple-step">
+        <img src="Images/Icons/warning.svg" class="apple-icon" alt="">
+        <div>
+          <strong>Treat outputs as answers without understanding assumptions</strong>
+          <p>
+            Dashboards and models don’t speak for themselves. I always surface the assumptions behind results
+            and where they may break down.
+          </p>
+        </div>
+      </div>
+
+      <div class="apple-step">
+        <img src="Images/Icons/flag.svg" class="apple-icon" alt="">
+        <div>
+          <strong>Chase complexity for the sake of sophistication</strong>
+          <p>
+            I don’t use complex or fashionable techniques unless they clearly add value.
+            If a simpler approach is more interpretable, robust, that’s the better choice.
+          </p>
+        </div>
+      </div>
+
+      <div class="apple-step">
+        <img src="Images/Icons/truck.svg" class="apple-icon" alt="">
+        <div>
+          <strong>Deliver results without accountability or context</strong>
+          <p>
+            I don’t hand over numbers and walk away. If a result can’t be explained,
+            defended or used to make a real decision, it’s not finished work.
+          </p>
+        </div>
+      </div>
+
+    </div>
+
+    <button class="close-btn">Close</button>
+  </div>
+</div>
+
+
+
+
+
+<!-- ========================= -->
+<!-- VOLUNTEERING MODALS       -->
+<!-- ========================= -->
+
+<div class="modal-overlay" id="vol-officer-modal">
+  <div class="modal">
+    <h2>Analytics & AI Officer — DBAS</h2>
+
+    <!-- CTA -->
+    <div class="modal-cta dashboard-nav">
+      <a
+        href="https://medium.com/@siddhantkohli9/demystifying-principal-component-analysis-fe68ad334d68"
+        target="_blank"
+        class="modal-link">
+        View Blog
+      </a>
+    </div>
+
+    <!-- HERO IMAGE -->
+    <img
+      src="Images/Projects/linear.jpg"
+      alt="Analytics & AI Officer volunteering"
+      class="modal-hero-img modal-hero-img--small"
+    >
+
+    <!-- CONTENT -->
+    <ul>
+      <li>
+        Mentored undergraduate analytics students in statistics, machine learning, and data fundamentals,
+        guiding them in designing and refining end-to-end analytics and data science projects.
+      </li>
+      <li>Authored and published a Medium article explaining <strong>Principal Component Analysis</strong> with both mathematical intuition and practical insight.</li>
+      <li>Helped organise and deliver analytics-focused workshops and industry-facing events.</li>
+      <li>Engaged with external organisations (including EY and Alteryx events) to strengthen industry exposure for students.</li>
+    </ul>
+
+    <button class="close-btn">Close</button>
+  </div>
+</div>
+
+<div class="modal-overlay" id="vol-math-modal">
+  <div class="modal">
+    <h2>Math Mentor — Deakin University</h2>
+
+    <!-- CTA -->
+    <div class="modal-cta dashboard-nav">
+      <a
+        href="https://github.com/Siddhant0kohli/Math-mentor-certificate-"
+        target="_blank"
+        class="modal-link">
+        View Certificate 
+      </a>
+    </div>
+
+    <!-- HERO IMAGE -->
+    <img
+      src="Images/Projects/nath.jpg"
+      alt="Mathematics mentoring at Deakin University"
+      class="modal-hero-img modal-hero-img--small"
+    >
+
+    <!-- CONTENT -->
+    <ul>
+      <li>
+        Mentored undergraduate students in <strong>statistics, probability, linear algebra, and introductory calculus</strong>,
+        with a focus on building conceptual understanding rather than rote formula use.
+      </li>
+      <li>
+        Helped students develop intuition around key topics such as probability distributions,
+        expectation, variance, matrix operations, and their role in data science and analytics.
+      </li>
+      <li>
+        Supported exam preparation by clarifying question structure, common pitfalls,
+        and how to communicate mathematical reasoning clearly under time constraints.
+      </li>
+      <li>
+        Learned to translate complex mathematical ideas into <strong>simple, accessible explanations</strong>,
+        strengthening my communication skills and ability to adapt explanations to different learning styles.
+      </li>
+    </ul>
+
+    <button class="close-btn">Close</button>
+  </div>
+</div>
+<!-- ========================= -->
+<!-- ACADEMICS MODALS          -->
+<!-- ========================= -->
+
+<!-- Academic Highlights -->
+<div class="modal-overlay" id="acad-highlights-modal">
+  <div class="modal">
+    <h2>Degree Highlights</h2>
+
+    <!-- DEGREE SUMMARY -->
+    <p class="modal-text">
+      <strong>Bachelor of Business Analytics & Data Science</strong><br>
+      Deakin University — Burwood (Melbourne)<br>
+      <em>2023 – 2026 · WAM: 76</em>
+    </p>
+
+    <ul>
+      <li>
+        Built a strong analytical foundation across
+        <strong>probability, statistics, linear algebra, optimisation, and predictive modelling</strong>,
+        with consistent application to real-world business problems.
+      </li>
+
+      <li>
+        Completed a <strong>math- and modelling-heavy analytics curriculum</strong>,
+        including machine learning, decision analytics, business intelligence,
+        and applied capstone projects.
+      </li>
+
+      <li>
+        Learned how analytics applies across diverse domains such as
+        <strong>supply chain decision-making, marketing analytics,
+        social media analytics, and strategic business analysis</strong>.
+      </li>
+
+      <li>
+        Developed solid foundations in <strong>data management and databases</strong>,
+        including relational modelling, ER diagrams, and understanding how
+        data architecture supports analytics workflows.
+      </li>
+
+      <li>
+        Gained experience in <strong>requirements gathering, problem structuring,
+        and project scoping</strong>, translating ambiguous business questions
+        into structured analytical objectives.
+      </li>
+
+      <li>
+        Studied <strong>project management, professional ethics, cybersecurity,
+        and data governance</strong>, reinforcing the importance of responsible,
+        secure, and ethical use of data in practice.
+      </li>
+
+      <li>
+        Learned—through close interaction with professors and peers—how to
+        <strong>ask better questions, challenge assumptions, and communicate analysis clearly</strong>,
+        not just produce technical outputs.
+      </li>
+    </ul>
+
+    <button class="close-btn">Close</button>
+  </div>
+</div>
+
+<!-- ========================= -->
+<!-- CERTIFICATIONS -->
+<!-- ========================= -->
+
+<div class="modal-overlay" id="acad-cert-modal">
+  <div class="modal">
+    <h2>Certifications & Professional Development</h2>
+
+    <!-- CTA -->
+    <div class="modal-cta dashboard-nav">
+      <a
+        href="https://coursera.org/share/38ab73a719a6f7e307f74f51cd015096"
+        target="_blank"
+        class="modal-link">
+        View Certificate
+      </a>
+
+      <a
+        href="https://github.com/Siddhant0kohli"
+        target="_blank"
+        class="modal-link">
+        View Projects
+      </a>
+    </div>
+
+    <!-- HERO IMAGE -->
+    <img
+      src="Images/Projects/cert.jpg"
+      alt="Professional certifications"
+      class="modal-hero-img"
+    >
+
+    <!-- CONTENT -->
+    <ul>
+      <li>
+        <strong>Google Data Analytics Capstone</strong> — <em>Completed 2024</em>
+        <br>
+        Applied the full analytics lifecycle including data cleaning, EDA,
+        visualisation, and stakeholder-ready case study development.
+      </li>
+
+      <li>
+        <strong>Python for Data Science, AI & Development (IBM)</strong> — <em>Completed 2024</em>  
+        <br>
+        Strengthened Python foundations for analytics, covering data structures,
+        functions, libraries, and applied data science workflows.
+      </li>
+
+      <li>
+        <strong>Cloud Technologies (AWS)</strong> — <em>In Progress</em>  
+        <br>
+        Developing foundational understanding of cloud concepts, data storage,
+        security, and analytics-relevant services.
+      </li>
+    </ul>
+
+    <button class="close-btn">Close</button>
+  </div>
+</div>
+
+<!-- Research Papers -->
+<div class="modal-overlay" id="acad-papers-modal">
+  <div class="modal">
+    <h2>Research Papers & Academic Writing</h2>
+
+    <!-- CTA -->
+    <div class="modal-cta dashboard-nav">
+      <a
+        href="https://coursera.org/share/38ab73a719a6f7e307f74f51cd015096"
+        target="_blank"
+        class="modal-link">
+        View Probability academic paper
+      </a>
+
+      <a
+        href="https://github.com/Siddhant0kohli"
+        target="_blank"
+        class="modal-link">
+        View Linear algebra academic paper
+      </a>
+    </div>
+
+    <!-- HERO IMAGE -->
+    <img
+      src="Images/Projects/nnd.jpg"
+      alt="Academic research and mathematical writing"
+      class="modal-hero-img"
+    >
+
+    <h3>Probability and Its Applications in Data Science</h3>
+    <p class="modal-meta">
+      Deakin University · May 2024<br>
+      Supervised by Prof. Julien Ugon
+    </p>
+
+    <ul>
+      <li>
+        Covered <strong>axioms of probability, conditional probability, Bayes’ theorem</strong>,
+        and core discrete distributions (Bernoulli, Binomial, Poisson).
+      </li>
+      <li>
+        Included <strong>mathematical derivations and proofs</strong>
+        supporting probabilistic reasoning and inference.
+      </li>
+      <li>
+        Connected probability theory to <strong>applied contexts</strong>
+        such as decision-making, modelling uncertainty, and machine learning foundations.
+      </li>
+    </ul>
+
+    <h3>Neural Networks & Universal Approximation Theorem</h3>
+    <p class="modal-meta">
+      Deakin University · September 2024<br>
+      Supervised by Prof. Simon James
+    </p>
+
+    <ul>
+      <li>
+        Examined the <strong>linear algebra foundations of neural networks</strong>,
+        including vectors, matrices, linear transformations, and projections.
+      </li>
+      <li>
+        Provided a <strong>mathematical explanation and derivation</strong> of the
+        Universal Approximation Theorem and its implications for learning capacity.
+      </li>
+      <li>
+        Implemented a neural network from scratch using <strong>NumPy</strong>,
+        explicitly linking matrix operations to forward and backward passes.
+      </li>
+    </ul>
+
+    <button class="close-btn">Close</button>
+  </div>
+</div>
+
+<!-- ========================= -->
+<!-- JAVA SCRIPT CODES          -->
+<!-- ========================= -->
+
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    let modalHistory = [];
+
+    function closeAllModals() {
+      document.querySelectorAll(".modal-overlay").forEach(m => {
+        m.style.display = "none";
+      });
+      document.body.style.overflow = "";
+      modalHistory = [];
+    }
+
+    function closeModalSmooth(modal) {
+      if (!modal) return;
+    
+      modal.classList.remove("show");
+    
+      setTimeout(() => {
+        modal.style.display = "none";
+      }, 300); // must match CSS transition
+    }
+    
+
+
+  
+    // ===========================
+    // OPEN MODALS
+    // ===========================
+    document.querySelectorAll("[data-modal]").forEach(trigger => {
+      trigger.addEventListener("click", () => {
+        const id = trigger.dataset.modal;
+        const modal = document.getElementById(id);
+        if (!modal) return;
+    
+        const current = document.querySelector(".modal-overlay.show");
+        if (current) modalHistory.push(current.id);
+    
+        if (current) closeModalSmooth(current);
+    
+        modal.style.display = "flex";
+        requestAnimationFrame(() => modal.classList.add("show"));
+        document.body.style.overflow = "hidden";
+        document.body.classList.add("modal-open");
+      });
+    });
+  
+    // ===========================
+// CLOSE MODALS
+// ===========================
+document.querySelectorAll(".close-btn").forEach(btn => {
+  btn.addEventListener("click", () => {
+    document.querySelectorAll(".modal-overlay.show").forEach(modal => {
+      closeModalSmooth(modal);
+    });
+
+    modalHistory = [];
+    document.body.style.overflow = "";
+    document.body.classList.remove("modal-open"); // ✅ FIX
+  });
+});
+
+window.addEventListener("click", e => {
+  if (e.target.classList.contains("modal-overlay")) {
+    closeModalSmooth(e.target);
+    modalHistory = [];
+    document.body.style.overflow = "";
+    document.body.classList.remove("modal-open"); // ✅ FIX
+  }
+});
+
+// Prevent clicks inside modal from bubbling
+document.querySelectorAll(".modal").forEach(modal => {
+  modal.addEventListener("click", e => e.stopPropagation());
+});
+
+document.querySelectorAll(".back-btn").forEach(btn => {
+  btn.addEventListener("click", () => {
+    const current = btn.closest(".modal-overlay");
+    closeModalSmooth(current);
+
+    const prevId = modalHistory.pop();
+    if (prevId) {
+      const prev = document.getElementById(prevId);
+      prev.style.display = "flex";
+      requestAnimationFrame(() => prev.classList.add("show"));
+    } else {
+      document.body.style.overflow = "";
+      document.body.classList.remove("modal-open"); // ✅ FIX
+    }
+  });
+});
+
+
+  
+    // ===========================
+    // SKILLS TABS
+    // ===========================
+    document.querySelectorAll(".skills-tab-btn").forEach(btn => {
+      btn.addEventListener("click", () => {
+        document.querySelectorAll(".skills-tab-btn")
+          .forEach(b => b.classList.remove("active"));
+  
+        btn.classList.add("active");
+  
+        const target = btn.dataset.skillTab;
+  
+        document.querySelectorAll(".skills-panel")
+          .forEach(panel => panel.classList.remove("active"));
+  
+        document.getElementById(target).classList.add("active");
+      });
+    });
+
+      // ===========================
+    // ABOUT PHILOSOPHY TOGGLES
+  // ===========================
+document.querySelectorAll(".philo-btn").forEach(btn => {
+  btn.addEventListener("click", () => {
+    document.querySelectorAll(".philo-btn")
+      .forEach(b => b.classList.remove("active"));
+
+    btn.classList.add("active");
+  });
+});
+
+
+  
+
+
+    
+  
+    // ===========================
+    // SCROLL REVEAL
+    // ===========================
+    const revealObserver = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) entry.target.classList.add("in-view");
+      });
+    }, { threshold: 0.25 });
+  
+    document.querySelectorAll(".scroll-section, .reveal-item")
+      .forEach(el => revealObserver.observe(el));
+  
+    // ===========================
+    // PARALLAX
+    // ===========================
+    const parallaxEls = document.querySelectorAll(".parallax");
+  
+    function updateParallax() {
+      const vh = window.innerHeight;
+  
+      parallaxEls.forEach(el => {
+        const rect = el.getBoundingClientRect();
+        const strength = Number(el.dataset.parallaxStrength || 10);
+        const offset = -(rect.top + rect.height / 2 - vh / 2) / vh * strength;
+        el.style.setProperty("--parallax-y", `${offset}px`);
+      });
+    }
+  
+    window.addEventListener("scroll", updateParallax);
+    window.addEventListener("resize", updateParallax);
+    updateParallax();
+
+  // ===========================
+// APPLE-STYLE TEXT SCROLL
+// ===========================
+
+const appleText = document.querySelectorAll(".apple-scroll-text");
+
+const appleObserver = new IntersectionObserver(
+  entries => {
+    entries.forEach(entry => {
+      if (entry.intersectionRatio > 0.6) {
+        entry.target.classList.add("in-focus");
+      } else {
+        entry.target.classList.remove("in-focus");
+      }
+    });
+  },
+  {
+    threshold: [0.2, 0.6, 1.0]
+  }
+);
+
+appleText.forEach(el => appleObserver.observe(el));
+
+    // ===========================
+// NAVBAR ACTIVE + HIDE/SHOW (FINAL FIXED VERSION)
+// ===========================
+
+const navbar = document.getElementById("navbar");
+// 🔹 ADD THESE HERE
+let lastScrollY = window.scrollY;
+
+
+
+function updateActiveNav() {
+  const navLinks = document.querySelectorAll(".main-nav a");
+  const sections = Array.from(navLinks)
+    .map(link => document.querySelector(link.getAttribute("href")))
+    .filter(Boolean);
+
+  let scrollPos = window.scrollY + window.innerHeight * 0.30;
+  let active = "";
+
+  sections.forEach(sec => {
+    const top = sec.offsetTop;
+    const bottom = top + sec.offsetHeight;
+
+    if (scrollPos >= top && scrollPos < bottom) {
+      active = sec.id;
+    }
+  });
+
+  // ✅ Lock last section at bottom of page
+  const lastSection = sections[sections.length - 1];
+  if (window.scrollY + window.innerHeight >= document.body.scrollHeight - 2) {
+    active = lastSection.id;
+  }
+
+  navLinks.forEach(link => {
+    link.classList.toggle(
+      "active",
+      link.getAttribute("href") === "#" + active
+    );
+  });
+}
+
+// Smooth scrolling
+document.querySelectorAll(".main-nav a").forEach(link => {
+  link.addEventListener("click", e => {
+    e.preventDefault();
+
+    // ✅ CLOSE MODALS FIRST
+    closeAllModals();
+
+    // ✅ THEN SCROLL
+    const id = link.getAttribute("href").substring(1);
+    const target = document.getElementById(id);
+
+    if (target) {
+      const y = target.offsetTop - 120;
+      window.scrollTo({ top: y, behavior: "smooth" });
+    }
+  });
+});
+
+// Hide on scroll down, show on scroll up (Apple-stable)
+window.addEventListener("scroll", () => {
+  const currentY = window.scrollY;
+  const delta = currentY - lastScrollY;
+
+  // Always visible near top
+  if (currentY < 120) {
+    navbar.classList.remove("hidden");
+  }
+  // Scrolling down
+  else if (delta > 6) {
+    navbar.classList.add("hidden");
+  }
+  // Scrolling up
+  else if (delta < -6) {
+    navbar.classList.remove("hidden");
+  }
+
+  lastScrollY = currentY;
+  updateActiveNav();
+});
+  
+  }); // END DOMContentLoaded
+  </script>
+
+
+  <script>
+    if ('scrollRestoration' in history) {
+      history.scrollRestoration = 'manual';
+    }
+
+    window.addEventListener('load', () => {
+      window.scrollTo(0, 0);
+      history.scrollRestoration = 'manual';
+    });
+  </script>
+
+</body>
+</html> 
